@@ -1,25 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router"; 
+import React, { useState } from "react";
+import { Link } from "react-router";
 import { motion } from "framer-motion";
 import useAuth from "../../../hooks/useAuth";
-import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
-  const [coins, setCoins] = useState(0);
 
   // Framer Motion animation
   const pulseAnimation = {
     scale: [1, 1.1, 1],
-    transition: {
-      duration: 1.5,
-      repeat: Infinity,
-      repeatType: "loop",
-    },
+    transition: { duration: 1.5, repeat: Infinity, repeatType: "loop" },
   };
 
-  // ✅ Logout Handler
+  // React Query for fetching coin
+  const { data: coinsData } = useQuery({
+    queryKey: ["userCoin", user?.email],
+    enabled: !!user?.email, // only fetch if user is logged in
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data.coin || 0;
+    },
+  });
+
+  const coins = coinsData || 0;
+
+  // Logout Handler
   const handleLogout = async () => {
     try {
       await logOut();
@@ -30,29 +39,12 @@ const Navbar = () => {
     }
   };
 
-  // ✅ Fetch coin dynamically (backend থেকে)
-  useEffect(() => {
-    const fetchCoins = async () => {
-      if (user?.email) {
-        try {
-          const { data } = await axios.get(
-            `http://localhost:5000/api/users/${user.email}`
-          );
-          setCoins(data?.coin || 0);
-        } catch (err) {
-          console.error("Failed to fetch coin:", err.message);
-        }
-      }
-    };
-    fetchCoins();
-  }, [user]);
-
   return (
     <div className="navbar sticky top-0 z-50 bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
       {/* Logo */}
       <div className="flex-1">
         <Link
-          to={user ? "/home" : "/"}
+          to ="/"
           className="btn btn-ghost normal-case text-xl text-white hover:bg-primary/30"
         >
           🪙 TaskCoin
@@ -70,7 +62,6 @@ const Navbar = () => {
               Register
             </Link>
 
-            {/* Animated Join Button */}
             <motion.a
               href="https://github.com/YourClientRepo"
               target="_blank"
@@ -86,12 +77,12 @@ const Navbar = () => {
             <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/dashboard">
               Dashboard
             </Link>
-            <Link
+            <button
               className="btn btn-outline border-white text-white hover:bg-white hover:text-black"
-              to="/available-coin"
+             
             >
               Available Coin: {coins}
-            </Link>
+            </button>
             <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/profile">
               Profile
             </Link>
@@ -99,7 +90,6 @@ const Navbar = () => {
               Logout
             </button>
 
-            {/* Animated Join Button */}
             <motion.a
               href="https://github.com/YourClientRepo"
               target="_blank"
@@ -142,7 +132,6 @@ const Navbar = () => {
             <>
               <Link className="btn btn-ghost w-full" to="/login">Login</Link>
               <Link className="btn btn-ghost w-full" to="/register">Register</Link>
-
               <motion.a
                 href="https://github.com/YourClientRepo"
                 target="_blank"
@@ -156,15 +145,11 @@ const Navbar = () => {
           ) : (
             <>
               <Link className="btn btn-ghost w-full" to="/dashboard">Dashboard</Link>
-              <Link
-                className="btn btn-outline w-full"
-                to="/available-coin"
-              >
+              <button className="btn btn-outline w-full">
                 Available Coin: {coins}
-              </Link>
+              </button>
               <Link className="btn btn-ghost w-full" to="/profile">Profile</Link>
               <button onClick={handleLogout} className="btn btn-error w-full">Logout</button>
-
               <motion.a
                 href="https://github.com/YourClientRepo"
                 target="_blank"

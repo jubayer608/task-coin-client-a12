@@ -10,12 +10,12 @@ const Home = () => {
     return (
         <div className='max-w-7xl mx-auto'>
            <Banner></Banner>
-           
+           <Testimonial></Testimonial>
            <EarningTips></EarningTips>
            
            <PlatformStatistics></PlatformStatistics>
            <WhyChooseUsSection></WhyChooseUsSection>
-            <Testimonial></Testimonial>
+            
         </div>
     );
 };

@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+import { Outlet, NavLink, Link } from "react-router";
+import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle, FaShoppingCart } from "react-icons/fa";
+import useUserRole from "../hooks/useUserRole";
+
+const DashboardLayout = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { role, user, coins, loading } = useUserRole();
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+    );
+  }
+
+  const navItems = {
+    worker: [
+      { name: "Home", path: "/dashboard/home", icon: <FaHome /> },
+      { name: "Task List", path: "/dashboard/tasklist", icon: <FaTasks /> },
+      { name: "My Submissions", path: "/dashboard/submissions", icon: <FaFileAlt /> },
+      { name: "Withdrawals", path: "/dashboard/withdrawals", icon: <FaCoins /> },
+    ],
+    buyer: [
+      { name: "Home", path: "/dashboard/home", icon: <FaHome /> },
+      { name: "Add New Tasks", path: "/dashboard/add-tasks", icon: <FaPlusCircle /> },
+      { name: "My Tasks", path: "/dashboard/my-tasks", icon: <FaTasks /> },
+      { name: "Purchase Coin", path: "/dashboard/purchase", icon: <FaCoins /> },
+      { name: "Payment History", path: "/dashboard/payment-history", icon: <FaFileAlt /> },
+    ],
+    admin: [
+      { name: "Home", path: "/dashboard/home", icon: <FaHome /> },
+      { name: "Manage Users", path: "/dashboard/manage-users", icon: <FaUserCog /> },
+      { name: "Manage Task", path: "/dashboard/manage-task", icon: <FaTasks /> },
+    ],
+  };
+
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Top Navbar */}
+      <header className="flex items-center justify-between px-4 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white">
+        {/* Left side: Logo */}
+        <div className="flex items-center gap-2">
+          <button
+            className="lg:hidden p-2 rounded-md hover:bg-white/20"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <FaBars size={20} />
+          </button>
+          <Link to="/" className="text-xl font-bold flex items-center gap-1">
+            <span className="text-2xl">🪙</span> TaskCoin
+          </Link>
+        </div>
+
+        {/* Right side: User Info */}
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-medium bg-white/20 px-2 py-1 rounded-md">
+            Coins: <span className="font-bold">{coins}</span>
+          </span>
+          <span className="hidden sm:inline text-sm capitalize bg-white/20 px-2 py-1 rounded-md">
+            {role}
+          </span>
+          <div className="flex items-center gap-2">
+            <img
+              src={user?.photoURL}
+              alt="profile"
+              className="w-8 h-8 rounded-full border border-white"
+            />
+            <span className="hidden sm:inline text-sm">{user?.displayName}</span>
+          </div>
+          <div className="relative cursor-pointer">
+            <FaBell size={20} className="hover:text-yellow-300" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white rounded-full px-1">
+              3
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <aside
+          className={`fixed lg:static top-0 left-0 h-full w-64 bg-base-200 shadow-lg transform transition-transform duration-300 z-50 
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
+        >
+          <nav className="flex flex-col h-full p-4 space-y-2">
+            {navItems[role]?.map((item, idx) => (
+              <NavLink
+                key={idx}
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-3 py-2 rounded-md font-medium transition-colors ${
+                    isActive
+                      ? "bg-primary text-white"
+                      : "hover:bg-primary/10 hover:text-primary"
+                  }`
+                }
+                onClick={() => setIsOpen(false)}
+              >
+                {item.icon} {item.name}
+              </NavLink>
+            ))}
+            <div className="mt-auto text-center text-xs text-base-content/60">
+              © 2025 TaskCoin. All rights reserved.
+            </div>
+          </nav>
+        </aside>
+
+        {/* Main Content */}
+        <main className="flex-1 overflow-y-auto p-4 bg-base-100">
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardLayout;

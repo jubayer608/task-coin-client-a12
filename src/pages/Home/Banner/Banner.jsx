@@ -33,7 +33,7 @@ const slides = [
 
 const Banner = () => {
   return (
-    <div className="w-full mt-10">
+    <div className="w-full my-10">
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={0}
