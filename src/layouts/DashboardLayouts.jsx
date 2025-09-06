@@ -1,43 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Outlet, NavLink, Link } from "react-router";
-import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle } from "react-icons/fa";
+import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle, FaShoppingCart } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
-import useAxiosSecure from "../hooks/useAxiosSecure";
-import { Link as RouterLink } from "react-router";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { role, user, coins, loading } = useUserRole();
-  const axiosSecure = useAxiosSecure();
-  const [showNotif, setShowNotif] = useState(false);
-  const [notifications, setNotifications] = useState([]);
-  const wrapperRef = useRef(null);
-
-  // Fetch notifications
-  useEffect(() => {
-    if (!user?.email) return;
-
-    const fetchNotifications = async () => {
-      try {
-        const res = await axiosSecure.get(`/notifications?email=${user.email}`);
-        setNotifications(res.data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchNotifications();
-  }, [user?.email]);
-
-  // Click outside to close notifications
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setShowNotif(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [wrapperRef]);
 
   if (loading) {
     return (
@@ -72,6 +40,7 @@ const DashboardLayout = () => {
     <div className="flex flex-col h-screen">
       {/* Top Navbar */}
       <header className="flex items-center justify-between px-4 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white">
+        {/* Left side: Logo */}
         <div className="flex items-center gap-2">
           <button
             className="lg:hidden p-2 rounded-md hover:bg-white/20"
@@ -84,7 +53,7 @@ const DashboardLayout = () => {
           </Link>
         </div>
 
-        {/* Right side */}
+        {/* Right side: User Info */}
         <div className="flex items-center gap-4">
           <span className="text-sm font-medium bg-white/20 px-2 py-1 rounded-md">
             Coins: <span className="font-bold">{coins}</span>
@@ -100,36 +69,11 @@ const DashboardLayout = () => {
             />
             <span className="hidden sm:inline text-sm">{user?.displayName}</span>
           </div>
-
-          {/* Notification Icon */}
-          <div className="relative cursor-pointer" ref={wrapperRef}>
-            <FaBell size={22} className="hover:text-yellow-300" onClick={() => setShowNotif((prev) => !prev)} />
-            {notifications.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white rounded-full px-1">
-                {notifications.length}
-              </span>
-            )}
-
-            {/* Notification Pop-up */}
-            {showNotif && (
-              <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white border rounded-lg shadow-lg z-50">
-                <h4 className="font-bold p-3 border-b">Notifications</h4>
-                {notifications.length === 0 ? (
-                  <p className="p-3 text-gray-500">No notifications</p>
-                ) : (
-                  notifications.map((n) => (
-                    <RouterLink
-                      key={n._id}
-                      to={n.actionRoute}
-                      className="block p-3 hover:bg-gray-100 border-b text-sm"
-                    >
-                      <p>{n.message}</p>
-                      <p className="text-xs text-gray-400">{new Date(n.time).toLocaleString()}</p>
-                    </RouterLink>
-                  ))
-                )}
-              </div>
-            )}
+          <div className="relative cursor-pointer">
+            <FaBell size={20} className="hover:text-yellow-300" />
+            <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white rounded-full px-1">
+              3
+            </span>
           </div>
         </div>
       </header>

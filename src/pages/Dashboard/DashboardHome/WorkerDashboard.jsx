@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import useUserRole from "../../../hooks/useUserRole";
 import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
+import useUserRole from "../../../hooks/useUserRole";
 
 const WorkerDashboard = () => {
   const { user, loading: userLoading } = useUserRole();
@@ -24,7 +24,7 @@ const WorkerDashboard = () => {
     queryKey: ["workerApprovedSubmissions", user.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/worker/submissions/approved/${user.email}`);
-      return res.data;
+      return Array.isArray(res.data) ? res.data : [];
     },
   });
 
@@ -57,7 +57,7 @@ const WorkerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Total Earnings</p>
-          <p className="text-2xl font-bold text-green-700">${stats.totalEarnings || 0}</p>
+          <p className="text-2xl font-bold text-green-700">${stats.totalEarning || 0}</p>
         </motion.div>
       </div>
 
@@ -79,9 +79,9 @@ const WorkerDashboard = () => {
           <tbody>
             {approvedSubmissions.map((s) => (
               <tr key={s._id} className="hover:bg-gray-100 transition">
-                <td>{s.task_title}</td>
-                <td>${s.payable_amount}</td>
-                <td>{s.buyer_name}</td>
+                <td>{s.task_title || s.task_name || "N/A"}</td>
+                <td>${Number(s.payable_amount || 0)}</td>
+                <td>{s.buyer_name || s.Buyer_name || "N/A"}</td>
                 <td>
                   <span className="badge badge-success">{s.status}</span>
                 </td>

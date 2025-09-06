@@ -11,7 +11,7 @@ const DashboardHome = () => {
         return <Loading />;
     }
 
-    console.log("User role:", role); // Debug
+    // console.log("User role:", role); // Debug
 
     if (role === 'worker') {
         return <WorkerDashboard />;
