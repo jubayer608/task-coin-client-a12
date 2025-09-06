@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Outlet } from 'react-router';
 import authImg from "../assets/authImg.png";
+import TitleManager from '../routes/TitleManager';
 
 const AuthLayouts = () => {
   return (
@@ -27,6 +28,7 @@ const AuthLayouts = () => {
 
           {/* Auth Form */}
           <div className="flex-1 w-full max-w-md bg-base-100 p-8 rounded-2xl shadow-xl ring-1 ring-primary/20">
+            <TitleManager></TitleManager>
             <Outlet />
           </div>
 

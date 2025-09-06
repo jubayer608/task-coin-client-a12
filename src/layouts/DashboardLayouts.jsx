@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet, NavLink, Link } from "react-router";
 import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle, FaShoppingCart } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
+import TitleManager from "../routes/TitleManager";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,6 +110,7 @@ const DashboardLayout = () => {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-4 bg-base-100">
+          <TitleManager></TitleManager>
           <Outlet />
         </main>
       </div>
