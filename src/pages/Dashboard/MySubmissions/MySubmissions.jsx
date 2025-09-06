@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useUserRole from "../../../hooks/useUserRole";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -8,14 +8,22 @@ const MySubmissions = () => {
   const { user, loading } = useUserRole();
   const axiosSecure = useAxiosSecure();
 
-  const { data: submissions = [], isLoading } = useQuery({
-    queryKey: ["mySubmissions", user?.email],
+  const [page, setPage] = useState(1);
+  const limit = 5;
+
+  const { data = {}, isLoading } = useQuery({
+    queryKey: ["mySubmissions", user?.email, page],
     enabled: !!user?.email,
     queryFn: async () => {
-      const res = await axiosSecure.get(`/submissions?workerEmail=${user.email}`);
-      return res.data;
+      const res = await axiosSecure.get(
+        `/submissions?workerEmail=${user.email}&page=${page}&limit=${limit}`
+      );
+      return res.data; // { submissions: [], totalPages, currentPage }
     },
   });
+
+  const submissions = data.submissions || [];
+  const totalPages = data.totalPages || 1;
 
   if (loading || isLoading) {
     return (
@@ -69,11 +77,8 @@ const MySubmissions = () => {
             </thead>
             <tbody>
               {submissions.map((sub, idx) => (
-                <tr
-                  key={sub._id}
-                  className="hover:bg-purple-50 transition-colors"
-                >
-                  <td>{idx + 1}</td>
+                <tr key={sub._id} className="hover:bg-purple-50 transition-colors">
+                  <td>{(page - 1) * limit + idx + 1}</td>
                   <td className="font-semibold">{sub.task_title}</td>
                   <td>${sub.payable_amount}</td>
                   <td className="max-w-xs truncate">{sub.submission_details}</td>
@@ -94,6 +99,37 @@ const MySubmissions = () => {
           </table>
         </div>
       )}
+
+      {/* Pagination */}
+      <div className="flex justify-center items-center gap-3 mt-6">
+        <button
+          className="btn btn-sm"
+          disabled={page === 1}
+          onClick={() => setPage((p) => p - 1)}
+        >
+          Prev
+        </button>
+
+        {[...Array(totalPages).keys()].map((num) => (
+          <button
+            key={num + 1}
+            className={`btn btn-sm ${
+              page === num + 1 ? "btn-primary" : "btn-outline"
+            }`}
+            onClick={() => setPage(num + 1)}
+          >
+            {num + 1}
+          </button>
+        ))}
+
+        <button
+          className="btn btn-sm"
+          disabled={page === totalPages}
+          onClick={() => setPage((p) => p + 1)}
+        >
+          Next
+        </button>
+      </div>
     </motion.div>
   );
 };
