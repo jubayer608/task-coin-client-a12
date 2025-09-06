@@ -4,12 +4,14 @@ import Testimonial from '../Testimonial/Testimonial';
 import WhyChooseUsSection from '../WhyChooseUsSection/WhyChooseUsSection';
 import EarningTips from '../EarningTips/EarningTips';
 import PlatformStatistics from '../PlatformStatistics/PlatformStatistics';
+import TopWorkers from '../TopWorkers/TopWorkers';
 
 
 const Home = () => {
     return (
         <div className='max-w-7xl mx-auto'>
            <Banner></Banner>
+           <TopWorkers></TopWorkers>
            <Testimonial></Testimonial>
            <EarningTips></EarningTips>
            

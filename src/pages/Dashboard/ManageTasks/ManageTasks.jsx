@@ -49,7 +49,6 @@ const ManageTasks = () => {
             <th>Buyer</th>
             <th>Required Workers</th>
             <th>Payable Amount</th>
-            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -60,9 +59,7 @@ const ManageTasks = () => {
 task_title || "N/A"}</td>
               <td>{task.buyerId || task.buyer_email || "N/A"}</td>
               <td>{task.required_workers}</td>
-              <td>{task.payable_amount}</td>
-              <td>{task.
-status }</td>
+              <td>${task.payable_amount}</td>
               <td>
                 <button
                   className="btn btn-error btn-sm"
