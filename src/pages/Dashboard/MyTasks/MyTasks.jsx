@@ -112,7 +112,7 @@ const MyTasks = () => {
               <tr key={task._id}>
                 <td>{task.task_title}</td>
                 <td>{task.required_workers}</td>
-                <td>{task.payable_amount}</td>
+                <td>${task.payable_amount}</td>
                 <td>{new Date(task.completion_date).toLocaleDateString()}</td>
                 <td className="flex gap-2">
                   <button

@@ -10,7 +10,7 @@ const WorkerDashboard = () => {
 
   if (userLoading || !user) return <Loading />;
 
-  // Stats Query
+  // Worker stats (total submissions, pending, earnings from approved)
   const { data: stats = {} } = useQuery({
     queryKey: ["workerStats", user.email],
     queryFn: async () => {
@@ -19,11 +19,14 @@ const WorkerDashboard = () => {
     },
   });
 
-  // Approved submissions query
+  // Approved submissions list (buyer approved)
   const { data: approvedSubmissions = [] } = useQuery({
     queryKey: ["workerApprovedSubmissions", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/worker/submissions/approved/${user.email}`);
+      const res = await axiosSecure.get(
+        `/worker/submissions/approved/${user.email}`
+      );
+      // Ensure data is array and has correct fields
       return Array.isArray(res.data) ? res.data : [];
     },
   });
@@ -41,7 +44,9 @@ const WorkerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Total Submissions</p>
-          <p className="text-2xl font-bold text-blue-700">{stats.totalSubmissions || 0}</p>
+          <p className="text-2xl font-bold text-blue-700">
+            {stats.totalSubmissions || 0}
+          </p>
         </motion.div>
 
         <motion.div
@@ -49,7 +54,9 @@ const WorkerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Pending Submissions</p>
-          <p className="text-2xl font-bold text-yellow-700">{stats.pendingSubmissions || 0}</p>
+          <p className="text-2xl font-bold text-yellow-700">
+            {stats.pendingSubmissions || 0}
+          </p>
         </motion.div>
 
         <motion.div
@@ -57,38 +64,52 @@ const WorkerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Total Earnings</p>
-          <p className="text-2xl font-bold text-green-700">${stats.totalEarning || 0}</p>
+          <p className="text-2xl font-bold text-green-700">
+            ${stats.totalEarning || 0}
+          </p>
         </motion.div>
       </div>
 
       {/* Approved Submissions Table */}
-      <h3 className="text-xl font-semibold mb-4">Approved Submissions</h3>
+      <h3 className="text-xl font-semibold mb-4">My Approved Submissions</h3>
 
       {approvedSubmissions.length === 0 ? (
-        <p className="text-center text-gray-500">No approved submissions yet.</p>
+        <p className="text-center text-gray-500">
+          No approved submissions yet.
+        </p>
       ) : (
-        <table className="table w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>Task Title</th>
-              <th>Payable Amount</th>
-              <th>Buyer Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {approvedSubmissions.map((s) => (
-              <tr key={s._id} className="hover:bg-gray-100 transition">
-                <td>{s.task_title || s.task_name || "N/A"}</td>
-                <td>${Number(s.payable_amount || 0)}</td>
-                <td>{s.buyer_name || s.Buyer_name || "N/A"}</td>
-                <td>
-                  <span className="badge badge-success">{s.status}</span>
-                </td>
+        <div className="overflow-x-auto">
+          <table className="table w-full border rounded-lg overflow-hidden">
+            <thead className="bg-gray-200">
+              <tr>
+                <th>Task Title</th>
+                <th>Payable Amount</th>
+                <th>Buyer Email</th>
+                <th>Status</th>
+                <th>Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {approvedSubmissions.map((s) => (
+                <tr key={s._id} className="hover:bg-gray-100 transition">
+                  <td>{s.task_title || "N/A"}</td>
+                  <td>${Number(s.payable_amount || 0)}</td>
+                  <td>{s.Buyer_email || "Unknown"}</td>
+                  <td>
+                    <span className="badge badge-success">
+                      {s.status === "approve" ? "Approved" : s.status}
+                    </span>
+                  </td>
+                  <td>
+                    {s.createdAt
+                      ? new Date(s.createdAt).toLocaleDateString("en-GB")
+                      : "N/A"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
