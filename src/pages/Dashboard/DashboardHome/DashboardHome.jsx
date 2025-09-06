@@ -4,27 +4,24 @@ import AdminDashboard from "./AdminDashboard";
 import BuyerDashboard from "./BuyerDashboard";
 import WorkerDashboard from "./WorkerDashboard";
 
-
 const DashboardHome = () => {
-    const { role, roleLoading } = useUserRole();
+    const { role, loading } = useUserRole();
 
-    if (roleLoading) {
-        return <Loading></Loading>
+    if (loading) {
+        return <Loading />;
     }
 
-    if(role === 'user'){
-        return <WorkerDashboard></WorkerDashboard>
-    }
-    else if(role === 'rider'){
-        return <BuyerDashboard></BuyerDashboard>
-    }
-    else if(role ==='admin'){
-        return <AdminDashboard></AdminDashboard>
-    }
-    // else {
-    //     return <Forbidden></Forbidden>
-    // }
+    console.log("User role:", role); // Debug
 
+    if (role === 'worker') {
+        return <WorkerDashboard />;
+    } else if (role === 'buyer') {
+        return <BuyerDashboard />;
+    } else if (role === 'admin') {
+        return <AdminDashboard />;
+    } else {
+        return <p>Role not found</p>;
+    }
 };
 
 export default DashboardHome;

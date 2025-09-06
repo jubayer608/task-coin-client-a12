@@ -4,10 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import SocialLogin from "../SoicalLogin/SocialLogin";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import axios from "axios";
+import { useState } from "react";
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const axiosSecure = useAxiosSecure();
+   const [profilePic, setProfilePic] = useState('');
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
@@ -33,14 +36,14 @@ const Register = () => {
 
       await updateUserProfile({
         displayName: data.name,
-        photoURL: data.photoURL,
+        photoURL: profilePic,
       });
-
+   
       // Trigger mutation
       registerMutation.mutate({
         name: data.name,
         email: data.email,
-        photoURL: data.photoURL,
+        photoURL: profilePic,
         role: data.role,
       });
 
@@ -51,6 +54,21 @@ const Register = () => {
     }
   };
 
+    const handleImageUpload = async (e) => {
+        const image = e.target.files[0];
+        console.log(image)
+
+        const formData = new FormData();
+        formData.append('image', image);
+
+
+        const imagUploadUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`
+        const res = await axios.post(imagUploadUrl, formData)
+
+        setProfilePic(res.data.data.url);
+
+    }
+
   return (
     <div className="max-w-md mx-auto bg-base-200 p-6 rounded-lg shadow mt-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
@@ -60,7 +78,7 @@ const Register = () => {
           placeholder="Full Name" className="input input-bordered w-full" />
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
 
-        <input {...register("photoURL")} placeholder="Profile Picture URL"
+        <input {...register("photoURL")} type="file" onChange={handleImageUpload} placeholder="Profile Picture URL"
           className="input input-bordered w-full" />
 
         <input {...register("email", {
