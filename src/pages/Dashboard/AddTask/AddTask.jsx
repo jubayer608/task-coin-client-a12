@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import axios from "axios"; // Import standard axios
 import useUserRole from "../../../hooks/useUserRole";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -17,6 +18,8 @@ const AddTask = () => {
     submission_info: "",
     task_image_url: "",
   });
+
+  const imgbbApiKey = import.meta.env.VITE_image_upload_key;
 
   if (loading) {
     return (
@@ -37,8 +40,9 @@ const AddTask = () => {
     formData.append("image", file);
 
     try {
-      const res = await axiosSecure.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_upload_key}`,
+      // Use standard axios for the imgBB upload to avoid sending auth header
+      const res = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${imgbbApiKey}`,
         formData
       );
       setTask({ ...task, task_image_url: res.data.data.display_url });
@@ -64,13 +68,13 @@ const AddTask = () => {
     }
 
     try {
-      // Save task to backend
+      // Save task to backend using axiosSecure
       await axiosSecure.post("/tasks", {
         ...task,
         buyerId: user.email,
       });
 
-      // Deduct coins
+      // Deduct coins in the frontend state
       setCoins(coins - totalPayable);
 
       Swal.fire("Success", "Task added successfully!", "success");

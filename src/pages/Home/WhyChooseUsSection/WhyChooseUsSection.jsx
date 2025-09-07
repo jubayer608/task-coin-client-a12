@@ -15,7 +15,13 @@ const whyChooseData = [
     title: "Fast Payment",
     content:
       "Workers receive coins instantly after task approval. Buyers can purchase coins easily.",
-    icon: <FaDollarSign />,
+    icon:
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+      >
+        <FaDollarSign />
+      </motion.div>,
   },
   {
     id: 3,
