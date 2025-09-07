@@ -3,9 +3,10 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 
+
 const ManageUsers = () => {
   const queryClient = useQueryClient();
-  const axiosSecure = useAxiosSecure(); 
+  const axiosSecure = useAxiosSecure();
 
   // Fetch users
   const { data: users = [], isLoading, isError } = useQuery({
@@ -63,7 +64,7 @@ const ManageUsers = () => {
             <tr key={user._id} className="hover:bg-gray-100 transition">
               <td>
                 <img
-                  src={user.photoURL}
+                  src={user.photoURL || 'https://placehold.co/40x40/E5E7EB/1F2937?text=NO+IMG'}
                   alt={user.name}
                   className="w-10 h-10 rounded-full"
                 />

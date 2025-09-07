@@ -90,7 +90,7 @@ const Banner = () => {
       </Swiper>
 
       {/* Custom Pagination Styling */}
-      <style jsx>{`
+      <style>{`
         .swiper-pagination-bullet {
           background-color: #0ea5e9; /* primary color */
           opacity: 0.7;
