@@ -3,8 +3,9 @@ import { FaUserCog, FaUserTie, FaUsers } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 
 
+
 const Loading = () => {
-  const [role, isRoleLoading] = useUserRole();
+  const [role] = useUserRole();
 
 
   const roleConfig = {
