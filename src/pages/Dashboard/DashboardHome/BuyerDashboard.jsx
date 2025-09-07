@@ -31,9 +31,13 @@ const BuyerDashboard = () => {
     },
   });
 
-  const handleApprove = async (id, amount, workerEmail) => {
+  // Approve submission
+  const handleApprove = async (id) => {
     try {
-      await axiosSecure.patch(`/buyer/submissions/approve/${id}`);
+      await axiosSecure.patch(`/buyer/submissions/${id}`, {
+        status: "approve",
+        buyerName: user.displayName,
+      });
       Swal.fire(
         "Approved!",
         "Submission approved and coins transferred.",
@@ -43,12 +47,21 @@ const BuyerDashboard = () => {
       refetchStats();
     } catch (err) {
       console.error(err);
+      Swal.fire(
+        "Error",
+        "Failed to approve submission. Try again.",
+        "error"
+      );
     }
   };
 
+  // Reject submission
   const handleReject = async (id) => {
     try {
-      await axiosSecure.patch(`/buyer/submissions/reject/${id}`);
+      await axiosSecure.patch(`/buyer/submissions/${id}`, {
+        status: "rejected",
+        buyerName: user.displayName,
+      });
       Swal.fire(
         "Rejected!",
         "Submission rejected and workers required increased.",
@@ -58,6 +71,11 @@ const BuyerDashboard = () => {
       refetchStats();
     } catch (err) {
       console.error(err);
+      Swal.fire(
+        "Error",
+        "Failed to reject submission. Try again.",
+        "error"
+      );
     }
   };
 
@@ -74,7 +92,9 @@ const BuyerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Total Tasks Added</p>
-          <p className="text-2xl font-bold text-blue-700">{stats.totalTasks || 0}</p>
+          <p className="text-2xl font-bold text-blue-700">
+            {stats.totalTasks || 0}
+          </p>
         </motion.div>
 
         <motion.div
@@ -82,7 +102,9 @@ const BuyerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Pending Workers</p>
-          <p className="text-2xl font-bold text-yellow-700">{stats.pendingWorkers || 0}</p>
+          <p className="text-2xl font-bold text-yellow-700">
+            {stats.pendingWorkers || 0}
+          </p>
         </motion.div>
 
         <motion.div
@@ -90,7 +112,9 @@ const BuyerDashboard = () => {
           whileHover={{ scale: 1.05 }}
         >
           <p className="text-gray-700 font-semibold">Total Payment Paid</p>
-          <p className="text-2xl font-bold text-green-700">${stats.totalPaid || 0}</p>
+          <p className="text-2xl font-bold text-green-700">
+            ${stats.totalPaid || 0}
+          </p>
         </motion.div>
       </div>
 
@@ -127,9 +151,7 @@ const BuyerDashboard = () => {
                 <td className="space-x-2">
                   <button
                     className="btn btn-sm btn-success"
-                    onClick={() =>
-                      handleApprove(s._id, s.payable_amount, s.worker_email)
-                    }
+                    onClick={() => handleApprove(s._id)}
                   >
                     Approve
                   </button>

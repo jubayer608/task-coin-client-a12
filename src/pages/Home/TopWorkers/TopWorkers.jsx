@@ -1,15 +1,16 @@
 // components/TopWorkers.jsx
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { motion } from "framer-motion";
+import useAxios from "../../../hooks/useAxios";
 
 
 const TopWorkers = () => {
+   const axiosInstance =useAxios()
   const { data: workers = [], isLoading, isError } = useQuery({
     queryKey: ["topWorkers"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/workers/top");
+      const res = await axiosInstance.get("/workers/top");
       return res.data;
     },
   });

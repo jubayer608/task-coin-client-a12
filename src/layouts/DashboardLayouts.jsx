@@ -1,12 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Outlet, NavLink, Link } from "react-router";
-import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle, FaShoppingCart } from "react-icons/fa";
+import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 import TitleManager from "../routes/TitleManager";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const axiosSecure = useAxiosSecure();
   const { role, user, coins, loading } = useUserRole();
+  const popupRef = useRef(null);
+
+  // Fetch notifications
+  useEffect(() => {
+    if (user?.email) {
+      axiosSecure.get(`/notifications/${user.email}`).then((res) => {
+        setNotifications(res.data || []);
+      });
+    }
+  }, [user, axiosSecure]);
+
+  // Close popup when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setShowNotifications(false);
+      }
+    };
+    if (showNotifications) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showNotifications]);
 
   if (loading) {
     return (
@@ -40,7 +67,7 @@ const DashboardLayout = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* Top Navbar */}
-      <header className="flex items-center justify-between px-4 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white">
+      <header className="flex items-center justify-between px-4 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white relative">
         {/* Left side: Logo */}
         <div className="flex items-center gap-2">
           <button
@@ -70,11 +97,42 @@ const DashboardLayout = () => {
             />
             <span className="hidden sm:inline text-sm">{user?.displayName}</span>
           </div>
-          <div className="relative cursor-pointer">
-            <FaBell size={20} className="hover:text-yellow-300" />
-            <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white rounded-full px-1">
-              3
-            </span>
+
+          {/* Notification Icon */}
+          <div className="relative cursor-pointer" ref={popupRef}>
+            <FaBell
+              size={20}
+              className="hover:text-yellow-300"
+              onClick={() => setShowNotifications(!showNotifications)}
+            />
+            {notifications.length > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white rounded-full px-1">
+                {notifications.length}
+              </span>
+            )}
+
+            {/* Floating Popup */}
+            {showNotifications && (
+              <div className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white text-black shadow-lg rounded-lg z-50">
+                <div className="p-3 border-b font-bold">Notifications</div>
+                {notifications.length === 0 ? (
+                  <p className="p-3 text-sm text-gray-500">No notifications</p>
+                ) : (
+                  notifications.map((n, idx) => (
+                    <div
+                      key={idx}
+                      className="p-3 border-b hover:bg-gray-100 transition cursor-pointer"
+                      onClick={() => (window.location.href = n.actionRoute)}
+                    >
+                      <p className="text-sm">{n.message}</p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(n.time).toLocaleString()}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -110,7 +168,7 @@ const DashboardLayout = () => {
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto p-4 bg-base-100">
-          <TitleManager></TitleManager>
+          <TitleManager />
           <Outlet />
         </main>
       </div>
