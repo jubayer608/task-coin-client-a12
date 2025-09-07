@@ -1,5 +1,6 @@
 import Loading from "../../../components/Loading";
 import useUserRole from "../../../hooks/useUserRole";
+import Forbidden from "../Forbidden/Forbidden";
 import AdminDashboard from "./AdminDashboard";
 import BuyerDashboard from "./BuyerDashboard";
 import WorkerDashboard from "./WorkerDashboard";
@@ -20,7 +21,7 @@ const DashboardHome = () => {
     } else if (role === 'admin') {
         return <AdminDashboard />;
     } else {
-        return <p>Role not found</p>;
+        return <Forbidden></Forbidden>;
     }
 };
 

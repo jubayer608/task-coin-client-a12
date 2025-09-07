@@ -18,6 +18,11 @@ import MySubmissions from "../pages/Dashboard/MySubmissions/MySubmissions";
 import Withdraw from "../pages/Dashboard/Withdraw/Withdraw";
 import ManageUsers from "../pages/Dashboard/ManageUsers/ManageUsers";
 import ManageTasks from "../pages/Dashboard/ManageTasks/ManageTasks";
+import Forbidden from "../pages/Dashboard/Forbidden/Forbidden";
+import ErrorPage from "../components/ErrorPage";
+import AdminRoute from "../routes/AdminRoute";
+import WorkerRoute from "../routes/WorkerRoute";
+import BuyerRoute from "../routes/BuyerRoute";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +41,10 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path:"/forbidden",
+        Component:Forbidden
+      }
     ],
   },
   {
@@ -66,46 +75,50 @@ export const router = createBrowserRouter([
       },
       {
         path: "add-tasks",
-        element: <AddTask></AddTask>,
+        element: <BuyerRoute><AddTask></AddTask></BuyerRoute>,
       },
       {
         path: "my-tasks",
-        element: <MyTasks></MyTasks>,
+        element: <BuyerRoute><MyTasks></MyTasks></BuyerRoute>,
       },
       {
         path: "purchase",
-        element: <PurchaseCoin></PurchaseCoin>,
+        element: <BuyerRoute><PurchaseCoin></PurchaseCoin></BuyerRoute>,
       },
       {
         path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>,
+        element: <BuyerRoute><PaymentHistory></PaymentHistory></BuyerRoute>,
       },
       //  worker route
       {
         path: "tasklist",
-        element: <TaskList></TaskList>,
+        element: <WorkerRoute><TaskList></TaskList></WorkerRoute>,
       },
       {
         path: "tasks/:id",
-        element: <TaskDetails />,
+        element: <WorkerRoute><TaskDetails /></WorkerRoute>,
       },
       {
         path:"submissions",
-        element:<MySubmissions></MySubmissions>
+        element:<WorkerRoute><MySubmissions></MySubmissions></WorkerRoute>
       },
       {
         path:'withdrawals',
-        element:<Withdraw></Withdraw>
+        element:<WorkerRoute><Withdraw></Withdraw></WorkerRoute>
       },
       // admin routes
       {
         path:"manage-users",
-        element:<ManageUsers></ManageUsers>
+        element:<AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path:"manage-task",
-        element:<ManageTasks></ManageTasks>
+        element:<AdminRoute><ManageTasks></ManageTasks></AdminRoute>
       }
     ],
   },
+  {
+    path:"/*",
+    Component:ErrorPage
+  }
 ]);
