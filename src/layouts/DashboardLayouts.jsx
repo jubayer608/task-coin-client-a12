@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Outlet, NavLink, Link } from "react-router";
+import { Outlet, NavLink, Link } from "react-router"; // react-router-dom to be used
 import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 import TitleManager from "../routes/TitleManager";
@@ -22,10 +22,19 @@ const DashboardLayout = () => {
     }
   }, [user, axiosSecure]);
 
-  // Close popup when clicking outside
+  // Handle click outside to close popup and clear notifications
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
+        if (showNotifications) {
+          // Call backend to delete all notifications for the user
+          axiosSecure.delete(`/notifications/${user.email}`).then(() => {
+            // Update the state to clear notifications
+            setNotifications([]);
+          }).catch(err => {
+            console.error("Failed to clear notifications:", err);
+          });
+        }
         setShowNotifications(false);
       }
     };
@@ -33,7 +42,7 @@ const DashboardLayout = () => {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [showNotifications]);
+  }, [showNotifications, axiosSecure, user]);
 
   if (loading) {
     return (
@@ -91,7 +100,7 @@ const DashboardLayout = () => {
           </span>
           <div className="flex items-center gap-2">
             <img
-              src={user?.photoURL}
+              src={user?.photoURL || 'https://placehold.co/40x40/E5E7EB/1F2937?text=NO+IMG'}
               alt="profile"
               className="w-8 h-8 rounded-full border border-white"
             />
