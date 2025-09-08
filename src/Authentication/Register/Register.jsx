@@ -21,7 +21,7 @@ const Register = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      console.log("User saved to backend:", data);
+      // console.log("User saved to backend:", data);
       navigate("/dashboard");
     },
     onError: (err) => {
@@ -56,7 +56,7 @@ const Register = () => {
 
     const handleImageUpload = async (e) => {
         const image = e.target.files[0];
-        console.log(image)
+        // console.log(image)
 
         const formData = new FormData();
         formData.append('image', image);

@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
 
   // Create axios instance
   const axiosSecure = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: `https://task-coin-server.vercel.app`,
   });
 
   // Request interceptor to attach JWT
