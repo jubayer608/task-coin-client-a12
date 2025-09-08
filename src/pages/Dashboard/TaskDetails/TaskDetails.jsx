@@ -68,13 +68,21 @@ const TaskDetails = () => {
         {task.task_title}
       </h2>
 
-      <motion.img
-        src={task.task_image_url}
-        alt={task.task_title}
-        className="rounded-xl w-full max-h-80 object-cover mb-6 border-4 border-purple-300 shadow-lg"
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.3 }}
-      />
+      <div className="mb-6">
+        {task.task_image_url ? (
+          <motion.img
+            src={task.task_image_url}
+            alt={task.task_title}
+            className="rounded-xl w-full max-h-80 object-cover border-4 border-purple-300 shadow-lg"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          />
+        ) : (
+          <div className="w-full max-h-80 bg-gray-300 rounded-xl flex items-center justify-center border-4 border-purple-300 shadow-lg">
+            <span className="text-gray-600">No Image Available</span>
+          </div>
+        )}
+      </div>
 
       <div className="space-y-2 mb-6">
         <p className="text-gray-700">
