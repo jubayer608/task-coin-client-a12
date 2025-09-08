@@ -2,7 +2,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-
 const AdminDashboard = () => {
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
@@ -16,9 +15,6 @@ const AdminDashboard = () => {
     },
   });
 
-  
-
-
   // ----------------- Fetch Withdrawals -----------------
   const { data: withdrawals = [], isLoading: withdrawLoading } = useQuery({
     queryKey: ["withdrawals"],
@@ -27,11 +23,6 @@ const AdminDashboard = () => {
       return Array.isArray(res.data) ? res.data : [];
     },
   });
-
- 
-
-
-  
 
   const handlePaymentSuccess = async (id) => {
     const confirm = await Swal.fire({
@@ -49,8 +40,7 @@ const AdminDashboard = () => {
   };
 
   // ----------------- Loading -----------------
-  if (statsLoading || withdrawLoading)
-    return <p>Loading admin dashboard...</p>;
+  if (statsLoading || withdrawLoading) return <p>Loading admin dashboard...</p>;
 
   // ----------------- JSX -----------------
   return (
@@ -77,12 +67,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Manage Users */}
-     
-
-      {/* Manage Tasks */}
-      
-
       {/* Withdraw Requests */}
       <div>
         <h3 className="text-xl font-bold mb-4">Withdraw Requests</h3>
@@ -96,7 +80,10 @@ const AdminDashboard = () => {
           </thead>
           <tbody>
             {withdrawals.map((w) => (
-              <tr key={w._id?.$oid || w._id} className="hover:bg-gray-100 transition">
+              <tr
+                key={w._id?.$oid || w._id}
+                className="hover:bg-gray-100 transition"
+              >
                 <td>{w.worker_email}</td>
                 <td>{w.withdrawal_coin}</td>
                 <td>

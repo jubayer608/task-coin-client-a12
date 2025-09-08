@@ -1,4 +1,3 @@
-
 import { useNavigate, useLocation } from "react-router";
 import useAuth from "../../hooks/useAuth";
 
@@ -12,15 +11,6 @@ const SocialLogin = () => {
     try {
       const result = await signInWithGoogle();
       console.log("Google User:", result.user);
-
-      // এখানে চাইলে backend এ user info পাঠাতে পারো default worker role সহ
-      // await axios.post("http://localhost:5000/api/auth/init", {
-      //   name: result.user.displayName,
-      //   email: result.user.email,
-      //   photoURL: result.user.photoURL,
-      //   role: "worker",
-      // });
-
       navigate(from, { replace: true });
     } catch (error) {
       console.error(error.message);

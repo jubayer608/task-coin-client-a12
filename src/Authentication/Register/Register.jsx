@@ -17,7 +17,7 @@ const Register = () => {
   // React Query mutation with axiosSecure
   const registerMutation = useMutation({
     mutationFn: async (userData) => {
-      const res = await axiosSecure.post("/users", userData); // baseURL is set in axiosSecure
+      const res = await axiosSecure.post("/users", userData); 
       return res.data;
     },
     onSuccess: (data) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Outlet, NavLink, Link } from "react-router"; // react-router-dom to be used
+import { Outlet, NavLink, Link } from "react-router"; 
 import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 import TitleManager from "../routes/TitleManager";

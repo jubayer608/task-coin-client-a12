@@ -1,19 +1,21 @@
-// ManageTasks.jsx
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-
 
 const ManageTasks = () => {
   const queryClient = useQueryClient();
   const axiosSecure = useAxiosSecure();
 
   // Fetch tasks
-  const { data: tasks = [], isLoading, isError } = useQuery({
+  const {
+    data: tasks = [],
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["adminTasks"],
     queryFn: async () => {
       const res = await axiosSecure.get("/admin/tasks");
-   
+
       return Array.isArray(res.data) ? res.data : [];
     },
   });
@@ -55,8 +57,7 @@ const ManageTasks = () => {
         <tbody>
           {tasks.map((task) => (
             <tr key={task._id} className="hover:bg-gray-100 transition">
-              <td>{task.name || task.
-task_title || "N/A"}</td>
+              <td>{task.name || task.task_title || "N/A"}</td>
               <td>{task.buyerId || task.buyer_email || "N/A"}</td>
               <td>{task.required_workers}</td>
               <td>${task.payable_amount}</td>

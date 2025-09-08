@@ -50,10 +50,7 @@ const Withdraw = () => {
           `Withdrawal request of $${withdrawAmount} submitted!`,
           "success"
         );
-        
-        // Don't deduct coins from the local state here.
-        // Coins will be deducted on the backend when admin approves.
-        
+
         // Reset form
         setWithdrawCoin(0);
         setPaymentSystem("Bkash");

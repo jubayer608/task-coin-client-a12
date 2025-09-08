@@ -77,11 +77,16 @@ const MySubmissions = () => {
             </thead>
             <tbody>
               {submissions.map((sub, idx) => (
-                <tr key={sub._id} className="hover:bg-purple-50 transition-colors">
+                <tr
+                  key={sub._id}
+                  className="hover:bg-purple-50 transition-colors"
+                >
                   <td>{(page - 1) * limit + idx + 1}</td>
                   <td className="font-semibold">{sub.task_title}</td>
                   <td>${sub.payable_amount}</td>
-                  <td className="max-w-xs truncate">{sub.submission_details}</td>
+                  <td className="max-w-xs truncate">
+                    {sub.submission_details}
+                  </td>
                   <td>{sub.Buyer_email}</td>
                   <td>
                     <span
