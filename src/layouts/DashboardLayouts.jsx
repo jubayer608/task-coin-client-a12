@@ -76,7 +76,7 @@ const DashboardLayout = () => {
   return (
     <div className="flex flex-col h-screen">
       {/* Top Navbar */}
-      <header className="flex items-center justify-between px-4 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white relative">
+      <header className="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-2 shadow-md bg-gradient-to-r from-primary to-secondary text-white relative">
         {/* Left side: Logo */}
         <div className="flex items-center gap-2">
           <button
@@ -149,7 +149,7 @@ const DashboardLayout = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`fixed lg:static top-0 left-0 h-full w-64 bg-base-200 shadow-lg transform transition-transform duration-300 z-50 
+          className={`fixed lg:static top-14 sm:top-16 left-0 h-[calc(100vh-3.5rem)] lg:h-full w-64 bg-base-200 shadow-lg transform transition-transform duration-300 z-50 
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
         >
           <nav className="flex flex-col h-full p-4 space-y-2">
@@ -176,7 +176,7 @@ const DashboardLayout = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-4 bg-base-100">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-8 py-6 bg-base-100">
           <TitleManager />
           <Outlet />
         </main>
