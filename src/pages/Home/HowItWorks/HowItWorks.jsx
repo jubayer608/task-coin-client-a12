@@ -35,7 +35,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 dark:from-primary/10 dark:via-secondary/10 dark:to-accent/10">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">How It Works</h2>
@@ -63,8 +63,8 @@ const HowItWorks = () => {
                 )}
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <h3 className="text-xl font-bold text-base-content mb-3">{step.title}</h3>
+              <p className="text-base-content/70">{step.description}</p>
             </motion.div>
           ))}
         </div>

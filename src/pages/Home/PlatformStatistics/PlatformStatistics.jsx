@@ -27,7 +27,7 @@ const statsData = [
 const PlatformStatistics = () => (
   <section
     aria-labelledby="platform-stats-heading"
-    className="py-16 px-4 md:px-8 bg-white"
+    className="py-16 px-4 md:px-8 bg-base-100"
   >
     <div className="max-w-7xl mx-auto">
       <div className="text-center mb-12">
@@ -44,7 +44,7 @@ const PlatformStatistics = () => (
         {statsData.map((stat, index) => (
           <motion.div
             key={index}
-            className="bg-white shadow-lg rounded-2xl p-8 border border-gray-200 hover:border-primary hover:shadow-2xl transition-all duration-300"
+            className="bg-base-200 shadow-lg rounded-2xl p-8 border border-gray-200 dark:border-gray-700 hover:border-primary hover:shadow-2xl transition-all duration-300"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 + index * 0.2, type: "spring", stiffness: 120 }}
@@ -58,7 +58,7 @@ const PlatformStatistics = () => (
             </div>
 
             {/* Title */}
-            <div className="text-center text-lg font-semibold mb-2 text-gray-900">
+            <div className="text-center text-lg font-semibold mb-2 text-base-content">
               {stat.title}
             </div>
 
@@ -68,7 +68,7 @@ const PlatformStatistics = () => (
             </div>
 
             {/* Description */}
-            <div className="text-center text-gray-600">
+            <div className="text-center text-base-content/70">
               {stat.desc}
             </div>
           </motion.div>

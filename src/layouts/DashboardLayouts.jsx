@@ -176,7 +176,7 @@ const DashboardLayout = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-4 bg-base-100">
+        <main className="flex-1 overflow-y-auto p-4 bg-base-100 text-base-content transition-colors duration-300">
           <TitleManager />
           <Outlet />
         </main>

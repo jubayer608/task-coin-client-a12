@@ -11,20 +11,42 @@ import Testimonial from '../Testimonial/Testimonial';
 import WhyChooseUsSection from '../WhyChooseUsSection/WhyChooseUsSection';
 import Newsletter from '../Newsletter/Newsletter';
 
-
 const Home = () => {
     return (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16'>
-           <Banner />
+        <div className='bg-base-100 transition-colors duration-300'>
+           {/* Hero Section */}
+           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+              <Banner />
+           </div>
+           
+           {/* Featured Tasks Section */}
            <FeaturedTasks />
+           
+           {/* Top Workers Section */}
            <TopWorkers />
+           
+           {/* How It Works Section */}
            <HowItWorks />
+           
+           {/* Platform Statistics Section */}
            <PlatformStatistics />
+           
+           {/* Earning Tips Section */}
            <EarningTips />
+           
+           {/* Recent Activity Section */}
            <RecentActivity />
+           
+           {/* Special Offers Section */}
            <SpecialOffers />
+           
+           {/* Testimonials Section */}
            <Testimonial />
+           
+           {/* Why Choose Us Section */}
            <WhyChooseUsSection />
+           
+           {/* Newsletter Section */}
            <Newsletter />
         </div>
     );

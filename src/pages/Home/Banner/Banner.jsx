@@ -40,7 +40,7 @@ const Banner = () => {
         loop={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        className="w-full  h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] shadow-2xl"
+        className="w-full h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] shadow-2xl rounded-xl overflow-hidden"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import { FaMoon, FaSun } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +10,17 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  // Apply theme on mount and when it changes
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   // Framer Motion animation
   const pulseAnimation = {
@@ -55,6 +67,15 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
+            {/* Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="text-white hover:text-yellow-300 p-2 rounded-md transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
+            </button>
+            
             {!user ? (
               <>
                 <Link 
@@ -171,6 +192,22 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden bg-white shadow-lg border-t border-gray-200">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              {/* Theme Toggle Mobile */}
+              <button
+                onClick={toggleTheme}
+                className="w-full flex items-center gap-2 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium"
+              >
+                {theme === "light" ? (
+                  <>
+                    <FaMoon /> Dark Mode
+                  </>
+                ) : (
+                  <>
+                    <FaSun /> Light Mode
+                  </>
+                )}
+              </button>
+              
               {!user ? (
                 <>
                   <Link 

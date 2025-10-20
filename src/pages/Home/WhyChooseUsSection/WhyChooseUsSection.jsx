@@ -45,7 +45,7 @@ const WhyChooseUsSection = () => {
   const toggle = (id) => setOpenId(openId === id ? null : id);
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 dark:from-primary/10 dark:via-secondary/10 dark:to-accent/10">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
@@ -61,7 +61,7 @@ const WhyChooseUsSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index, type: "spring", stiffness: 120 }}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-primary transition-all duration-300 overflow-hidden"
+              className="bg-base-200 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-2xl hover:border-primary transition-all duration-300 overflow-hidden"
             >
               <button
                 onClick={() => toggle(item.id)}
@@ -71,7 +71,7 @@ const WhyChooseUsSection = () => {
                   <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary/20 via-secondary/20 to-accent/20 text-primary text-2xl shadow-md">
                     {item.icon}
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  <h3 className="text-lg font-semibold text-base-content">
                     {item.title}
                   </h3>
                 </div>
@@ -88,7 +88,7 @@ const WhyChooseUsSection = () => {
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="px-6 pb-6 text-gray-700 dark:text-gray-300 text-sm"
+                    className="px-6 pb-6 text-base-content/70 text-sm"
                   >
                     {item.content}
                   </motion.div>
