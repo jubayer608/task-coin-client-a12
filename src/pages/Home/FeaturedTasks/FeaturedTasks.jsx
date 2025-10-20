@@ -49,21 +49,20 @@ const FeaturedTasks = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300"
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
-              <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${task.image})` }}>
-                <div className="h-full bg-opacity-40 flex items-end">
-                  <div className="p-4 text-white">
-                    <h3 className="text-xl font-bold">{task.title}</h3>
-                  </div>
+              <div className="h-48 bg-cover bg-center relative" style={{ backgroundImage: `url(${task.image})` }}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-xl font-bold">{task.title}</h3>
                 </div>
               </div>
               
               <div className="p-6">
-                <p className="text-gray-600 mb-4">{task.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{task.description}</p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <div className="flex items-center">
                     <FaClock className="mr-1" />
                     {task.deadline}
@@ -83,7 +82,7 @@ const FeaturedTasks = () => {
                     to="/tasks"
                     className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300"
                   >
-                    View Details
+                    See More
                   </Link>
                 </div>
               </div>

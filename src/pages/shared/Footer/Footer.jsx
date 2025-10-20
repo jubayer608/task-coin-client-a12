@@ -1,9 +1,12 @@
 import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaGithub, FaTwitter } from "react-icons/fa";
+import { useTheme } from "../../contexts/ThemeContext/ThemeContext";
 
 const Footer = () => {
+  const { isDark } = useTheme();
+  
   return (
-    <footer className="bg-gradient-to-r from-primary via-secondary to-accent text-white">
+    <footer className={`bg-gradient-to-r from-primary via-secondary to-accent text-white ${isDark ? 'dark:bg-gray-900' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">

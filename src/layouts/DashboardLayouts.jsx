@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Outlet, NavLink, Link } from "react-router"; 
-import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle } from "react-icons/fa";
+import { FaBell, FaBars, FaHome, FaTasks, FaFileAlt, FaCoins, FaUserCog, FaPlusCircle, FaSun, FaMoon } from "react-icons/fa";
 import useUserRole from "../hooks/useUserRole";
 import TitleManager from "../routes/TitleManager";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useTheme } from "../contexts/ThemeContext/ThemeContext";
 
 const DashboardLayout = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const { isDark, toggleTheme } = useTheme();
   const axiosSecure = useAxiosSecure();
   const { role, user, coins, loading } = useUserRole();
   const popupRef = useRef(null);
@@ -98,6 +100,13 @@ const DashboardLayout = () => {
           <span className="hidden sm:inline text-sm capitalize bg-white/20 px-2 py-1 rounded-md">
             {role}
           </span>
+          <button
+            onClick={toggleTheme}
+            className="text-white hover:text-yellow-300 p-2 rounded-md transition-colors"
+            title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {isDark ? <FaSun className="h-5 w-5" /> : <FaMoon className="h-5 w-5" />}
+          </button>
           <div className="flex items-center gap-2">
             <img
               src={user?.photoURL || 'https://placehold.co/40x40/E5E7EB/1F2937?text=NO+IMG'}
@@ -149,7 +158,7 @@ const DashboardLayout = () => {
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar */}
         <aside
-          className={`fixed lg:static top-0 left-0 h-full w-64 bg-base-200 shadow-lg transform transition-transform duration-300 z-50 
+          className={`fixed lg:static top-0 left-0 h-full w-64 ${isDark ? 'bg-gray-800' : 'bg-gray-100'} shadow-lg transform transition-transform duration-300 z-50 
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
         >
           <nav className="flex flex-col h-full p-4 space-y-2">
@@ -176,7 +185,7 @@ const DashboardLayout = () => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-4 bg-base-100">
+        <main className={`flex-1 overflow-y-auto p-4 ${isDark ? 'bg-gray-900' : 'bg-gray-50'}`}>
           <TitleManager />
           <Outlet />
         </main>

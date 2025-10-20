@@ -36,10 +36,10 @@ const WorkerDashboard = () => {
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       {/* Welcome Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
           Welcome back, {user.displayName || "Worker"}! 👋
         </h2>
-        <p className="text-gray-600">Here's your performance overview</p>
+        <p className="text-gray-600 dark:text-gray-300">Here's your performance overview</p>
       </div>
 
       {/* Stats Cards */}
@@ -114,9 +114,9 @@ const WorkerDashboard = () => {
       </div>
 
       {/* Performance Chart Placeholder */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 flex items-center">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
             <FaChartLine className="mr-2 text-primary" />
             Performance Overview
           </h3>
@@ -137,8 +137,8 @@ const WorkerDashboard = () => {
 
       {/* Recent Achievements */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
             <FaStar className="mr-2 text-yellow-500" />
             Recent Achievements
           </h3>
@@ -160,8 +160,8 @@ const WorkerDashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
           <div className="space-y-3">
             <button className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
               Browse Available Tasks
@@ -177,10 +177,10 @@ const WorkerDashboard = () => {
       </div>
 
       {/* Approved Submissions Table */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">My Approved Submissions</h3>
-          <p className="text-gray-600 text-sm">Tasks that have been approved by buyers</p>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">My Approved Submissions</h3>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">Tasks that have been approved by buyers</p>
         </div>
 
         {approvedSubmissions.length === 0 ? (
