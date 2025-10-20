@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useUserRole from "../../../hooks/useUserRole";
 import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
+import { FaTasks, FaClock, FaDollarSign, FaChartLine, FaTrophy, FaStar } from "react-icons/fa";
 
 const BuyerDashboard = () => {
   const { user, loading: userLoading } = useUserRole();
@@ -86,87 +87,144 @@ const BuyerDashboard = () => {
       </h2>
 
       {/* Stats */}
-      <div className="grid md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <motion.div
-          className="bg-blue-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg"
           whileHover={{ scale: 1.05 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
         >
-          <p className="text-gray-700 font-semibold">Total Tasks Added</p>
-          <p className="text-2xl font-bold text-blue-700">
-            {stats.totalTasks || 0}
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-blue-100 text-sm font-medium">Total Tasks Added</p>
+              <p className="text-3xl font-bold">{stats.totalTasks || 0}</p>
+            </div>
+            <FaTasks className="text-4xl text-blue-200" />
+          </div>
         </motion.div>
 
         <motion.div
-          className="bg-yellow-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-xl text-white shadow-lg"
           whileHover={{ scale: 1.05 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
-          <p className="text-gray-700 font-semibold">Pending Workers</p>
-          <p className="text-2xl font-bold text-yellow-700">
-            {stats.pendingWorkers || 0}
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-yellow-100 text-sm font-medium">Pending Workers</p>
+              <p className="text-3xl font-bold">{stats.pendingWorkers || 0}</p>
+            </div>
+            <FaClock className="text-4xl text-yellow-200" />
+          </div>
         </motion.div>
 
         <motion.div
-          className="bg-green-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg"
           whileHover={{ scale: 1.05 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
         >
-          <p className="text-gray-700 font-semibold">Total Payment Paid</p>
-          <p className="text-2xl font-bold text-green-700">
-            ${stats.totalPaid || 0}
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-green-100 text-sm font-medium">Total Payment Paid</p>
+              <p className="text-3xl font-bold">${stats.totalPaid || 0}</p>
+            </div>
+            <FaDollarSign className="text-4xl text-green-200" />
+          </div>
         </motion.div>
       </div>
 
       {/* Tasks to Review */}
-      <h3 className="text-xl font-semibold mb-4">Tasks To Review</h3>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="bg-white rounded-xl shadow-lg overflow-hidden"
+      >
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-xl font-bold text-gray-900 flex items-center">
+            <FaTasks className="mr-2 text-primary" />
+            Tasks To Review
+          </h3>
+          <p className="text-gray-600 text-sm">Review and approve worker submissions</p>
+        </div>
 
-      {submissions.length === 0 ? (
-        <p className="text-center text-gray-500">No pending submissions.</p>
-      ) : (
-        <table className="table w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>Worker Name</th>
-              <th>Task Title</th>
-              <th>Payable Amount</th>
-              <th>Submission</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {submissions.map((s) => (
-              <tr key={s._id} className="hover:bg-gray-100 transition">
-                <td>{s.worker_name}</td>
-                <td>{s.task_title}</td>
-                <td>${s.payable_amount}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-info"
-                    onClick={() => setModalContent(s.submission_details)}
+        {submissions.length === 0 ? (
+          <div className="p-12 text-center">
+            <FaTasks className="text-6xl text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-500 text-xl mb-2">No pending submissions</p>
+            <p className="text-gray-400">All submissions have been reviewed</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Worker Name</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task Title</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payable Amount</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submission</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {submissions.map((s, index) => (
+                  <motion.tr
+                    key={s._id}
+                    className="hover:bg-gray-50 transition-colors"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    View
-                  </button>
-                </td>
-                <td className="space-x-2">
-                  <button
-                    className="btn btn-sm btn-success"
-                    onClick={() => handleApprove(s._id)}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className="btn btn-sm btn-error"
-                    onClick={() => handleReject(s._id)}
-                  >
-                    Reject
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {s.worker_name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {s.task_title}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                        ${s.payable_amount}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                        onClick={() => setModalContent(s.submission_details)}
+                      >
+                        View Details
+                      </motion.button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                        onClick={() => handleApprove(s._id)}
+                      >
+                        Approve
+                      </motion.button>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                        onClick={() => handleReject(s._id)}
+                      >
+                        Reject
+                      </motion.button>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </motion.div>
 
       {/* Modal */}
       {modalContent && (

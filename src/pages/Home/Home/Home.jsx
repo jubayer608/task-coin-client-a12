@@ -14,7 +14,7 @@ import Newsletter from '../Newsletter/Newsletter';
 
 const Home = () => {
     return (
-        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16'>
+        <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 py-8'>
            <Banner />
            <FeaturedTasks />
            <TopWorkers />

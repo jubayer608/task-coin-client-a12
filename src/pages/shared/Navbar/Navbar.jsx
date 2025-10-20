@@ -4,11 +4,14 @@ import { motion } from "framer-motion";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { useTheme } from "../../../contexts/ThemeContext/ThemeContext";
+import { FaSun, FaMoon } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   // Framer Motion animation
   const pulseAnimation = {
@@ -40,8 +43,8 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 z-50 w-full bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
@@ -54,90 +57,90 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-6">
             {!user ? (
               <>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/login"
                 >
                   Login
                 </Link>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/register"
                 >
                   Register
                 </Link>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/tasks"
                 >
                   Browse Tasks
                 </Link>
-                <motion.a
-                  href="https://github.com/YourClientRepo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-yellow-400 text-black px-4 py-2 rounded-md text-sm font-bold hover:bg-yellow-300 transition-colors"
-                  animate={pulseAnimation}
-                >
-                  Join as Developer
-                </motion.a>
               </>
             ) : (
               <>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/dashboard"
                 >
                   Dashboard
                 </Link>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/tasks"
                 >
                   Browse Tasks
                 </Link>
                 <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-white/10" 
                   to="/profile"
                 >
                   Profile
                 </Link>
                 <div className="relative group">
-                  <button className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                  <button className="text-white hover:text-yellow-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center hover:bg-white/10">
                     My Account
                     <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                    <div className="py-1">
-                      <Link to="/dashboard/my-tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border border-gray-200">
+                    <div className="py-2">
+                      <Link to="/dashboard/my-tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         My Tasks
                       </Link>
-                      <Link to="/dashboard/my-submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <Link to="/dashboard/submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         My Submissions
                       </Link>
-                      <Link to="/dashboard/payment-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <Link to="/dashboard/payment-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         Payment History
                       </Link>
-                      <Link to="/dashboard/purchase-coin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <Link to="/dashboard/purchase" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         Purchase Coins
                       </Link>
-                      <Link to="/dashboard/withdraw" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      <Link to="/dashboard/withdrawals" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
                         Withdraw
                       </Link>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white/20 px-3 py-1 rounded-full text-sm">
+                <div className="bg-white/20 px-4 py-2 rounded-lg text-sm font-medium">
                   Coins: {coins}
                 </div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={toggleTheme}
+                  className="bg-white/20 hover:bg-white/30 text-white p-2 rounded-lg transition-colors"
+                  title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+                >
+                  {isDark ? <FaSun className="w-4 h-4" /> : <FaMoon className="w-4 h-4" />}
+                </motion.button>
                 <button 
                   onClick={handleLogout} 
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                 >
                   Logout
                 </button>
@@ -170,94 +173,110 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden bg-white shadow-lg border-t border-gray-200">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-4 pt-4 pb-6 space-y-2">
               {!user ? (
                 <>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/login"
                     onClick={() => setIsOpen(false)}
                   >
                     Login
                   </Link>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/register"
                     onClick={() => setIsOpen(false)}
                   >
                     Register
                   </Link>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/tasks"
                     onClick={() => setIsOpen(false)}
                   >
                     Browse Tasks
                   </Link>
-                  <motion.a
-                    href="https://github.com/YourClientRepo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-3 py-2 bg-yellow-400 text-black rounded-md text-base font-bold hover:bg-yellow-300"
-                    animate={pulseAnimation}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Join as Developer
-                  </motion.a>
                 </>
               ) : (
                 <>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/dashboard"
                     onClick={() => setIsOpen(false)}
                   >
                     Dashboard
                   </Link>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/tasks"
                     onClick={() => setIsOpen(false)}
                   >
                     Browse Tasks
                   </Link>
                   <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors" 
                     to="/profile"
                     onClick={() => setIsOpen(false)}
                   >
                     Profile
                   </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/dashboard/my-tasks"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    My Tasks
-                  </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/dashboard/my-submissions"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    My Submissions
-                  </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/dashboard/payment-history"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Payment History
-                  </Link>
-                  <div className="px-3 py-2 text-gray-500 text-sm">
+                  <div className="border-t border-gray-200 pt-2 mt-2">
+                    <div className="px-4 py-2 text-gray-500 text-sm font-medium">My Account</div>
+                    <Link 
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors ml-4" 
+                      to="/dashboard/my-tasks"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      My Tasks
+                    </Link>
+                    <Link 
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors ml-4" 
+                      to="/dashboard/submissions"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      My Submissions
+                    </Link>
+                    <Link 
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors ml-4" 
+                      to="/dashboard/payment-history"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Payment History
+                    </Link>
+                    <Link 
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors ml-4" 
+                      to="/dashboard/purchase"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Purchase Coins
+                    </Link>
+                    <Link 
+                      className="block px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg text-base font-medium transition-colors ml-4" 
+                      to="/dashboard/withdrawals"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Withdraw
+                    </Link>
+                  </div>
+                  <div className="px-4 py-3 text-gray-500 text-sm font-medium bg-gray-50 rounded-lg">
                     Coins: {coins}
                   </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={toggleTheme}
+                    className="block w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg text-base font-medium transition-colors flex items-center"
+                  >
+                    {isDark ? <FaSun className="mr-2" /> : <FaMoon className="mr-2" />}
+                    Switch to {isDark ? 'Light' : 'Dark'} Mode
+                  </motion.button>
                   <button 
                     onClick={() => {
                       handleLogout();
                       setIsOpen(false);
                     }} 
-                    className="block w-full text-left px-3 py-2 bg-red-500 text-white rounded-md text-base font-medium hover:bg-red-600"
+                    className="block w-full text-left px-4 py-3 bg-red-500 text-white rounded-lg text-base font-medium hover:bg-red-600 transition-colors"
                   >
                     Logout
                   </button>

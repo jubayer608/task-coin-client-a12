@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const ErrorPage = ({ code = "500", message = "Something went wrong!" }) => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 px-4 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 px-4 relative overflow-hidden transition-colors duration-300">
       
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
@@ -48,7 +48,7 @@ const ErrorPage = ({ code = "500", message = "Something went wrong!" }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+          className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4"
         >
           Oops! {message}
         </motion.h2>
@@ -57,7 +57,7 @@ const ErrorPage = ({ code = "500", message = "Something went wrong!" }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="text-lg text-gray-600 mb-8 max-w-lg mx-auto"
+          className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-lg mx-auto"
         >
           Don't worry, this happens to the best of us. Let's get you back on track!
         </motion.p>
@@ -106,17 +106,17 @@ const ErrorPage = ({ code = "500", message = "Something went wrong!" }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-12 p-6 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-200"
+          className="mt-12 p-6 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-gray-600"
         >
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Need Help?</h3>
-          <p className="text-gray-600 text-sm">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">Need Help?</h3>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">
             If this problem persists, please contact our support team or check our FAQ section.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 mt-4 justify-center">
             <Link to="/contact" className="text-primary hover:text-secondary transition-colors text-sm font-medium">
               Contact Support
             </Link>
-            <span className="hidden sm:inline text-gray-300">•</span>
+            <span className="hidden sm:inline text-gray-300 dark:text-gray-500">•</span>
             <Link to="/faq" className="text-primary hover:text-secondary transition-colors text-sm font-medium">
               FAQ
             </Link>
