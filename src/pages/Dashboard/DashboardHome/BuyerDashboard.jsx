@@ -80,39 +80,39 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold text-primary mb-6">
+    <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-6">
         Welcome, {user.displayName || "Buyer"}
       </h2>
 
       {/* Stats */}
-      <div className="grid md:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <motion.div
-          className="bg-blue-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg text-center"
           whileHover={{ scale: 1.05 }}
         >
-          <p className="text-gray-700 font-semibold">Total Tasks Added</p>
-          <p className="text-2xl font-bold text-blue-700">
+          <p className="text-blue-100 font-semibold">Total Tasks Added</p>
+          <p className="text-3xl font-extrabold">
             {stats.totalTasks || 0}
           </p>
         </motion.div>
 
         <motion.div
-          className="bg-yellow-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-xl text-white shadow-lg text-center"
           whileHover={{ scale: 1.05 }}
         >
-          <p className="text-gray-700 font-semibold">Pending Workers</p>
-          <p className="text-2xl font-bold text-yellow-700">
+          <p className="text-yellow-100 font-semibold">Pending Workers</p>
+          <p className="text-3xl font-extrabold">
             {stats.pendingWorkers || 0}
           </p>
         </motion.div>
 
         <motion.div
-          className="bg-green-100 p-6 rounded-lg shadow text-center"
+          className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg text-center"
           whileHover={{ scale: 1.05 }}
         >
-          <p className="text-gray-700 font-semibold">Total Payment Paid</p>
-          <p className="text-2xl font-bold text-green-700">
+          <p className="text-green-100 font-semibold">Total Payment Paid</p>
+          <p className="text-3xl font-extrabold">
             ${stats.totalPaid || 0}
           </p>
         </motion.div>
@@ -172,7 +172,7 @@ const BuyerDashboard = () => {
       {modalContent && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <motion.div
-            className="bg-white p-6 rounded-lg max-w-lg w-full"
+            className="bg-white p-6 rounded-xl shadow-xl max-w-lg w-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}

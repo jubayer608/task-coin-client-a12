@@ -4,6 +4,7 @@ import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
 import useUserRole from "../../../hooks/useUserRole";
 import { FaTasks, FaClock, FaDollarSign, FaChartLine, FaTrophy, FaStar } from "react-icons/fa";
+import { Link } from "react-router";
 
 const WorkerDashboard = () => {
   const { user, loading: userLoading } = useUserRole();
@@ -113,6 +114,23 @@ const WorkerDashboard = () => {
         </motion.div>
       </div>
 
+      {/* Success Rate Radial */}
+      {(() => {
+        const successRate = stats.totalSubmissions > 0 
+          ? Math.round(((stats.totalSubmissions - stats.pendingSubmissions) / stats.totalSubmissions) * 100)
+          : 0;
+        return (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-8 flex items-center justify-center">
+            <div className="text-center">
+              <div className="radial-progress text-primary" style={{ "--value": successRate, "--size": "8rem", "--thickness": "10px" }} role="progressbar">
+                <span className="text-2xl font-bold text-gray-800">{successRate}%</span>
+              </div>
+              <p className="mt-3 text-sm text-gray-600">Task success rate</p>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Performance Chart Placeholder */}
       <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
         <div className="flex items-center justify-between mb-6">
@@ -163,15 +181,15 @@ const WorkerDashboard = () => {
         <div className="bg-white rounded-xl shadow-lg p-6">
           <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
           <div className="space-y-3">
-            <button className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
+            <Link to="/dashboard/tasklist" className="block w-full text-center bg-gradient-to-r from-primary to-secondary text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
               Browse Available Tasks
-            </button>
-            <button className="w-full bg-white border-2 border-primary text-primary py-3 px-4 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300">
+            </Link>
+            <Link to="/dashboard/submissions" className="block w-full text-center bg-white border-2 border-primary text-primary py-3 px-4 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300">
               View My Submissions
-            </button>
-            <button className="w-full bg-white border-2 border-secondary text-secondary py-3 px-4 rounded-lg font-semibold hover:bg-secondary hover:text-white transition-all duration-300">
+            </Link>
+            <Link to="/dashboard/withdrawals" className="block w-full text-center bg-white border-2 border-secondary text-secondary py-3 px-4 rounded-lg font-semibold hover:bg-secondary hover:text-white transition-all duration-300">
               Withdraw Earnings
-            </button>
+            </Link>
           </div>
         </div>
       </div>

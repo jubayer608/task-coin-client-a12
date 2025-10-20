@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useUserRole from "../../../hooks/useUserRole";
 import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
+  const [theme, setTheme] = useState("microtasktheme");
+  const { role } = useUserRole();
 
   // Framer Motion animation
   const pulseAnimation = {
@@ -39,6 +42,24 @@ const Navbar = () => {
     }
   };
 
+  // Theme handling (persist and apply to container with data-theme)
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) {
+      setTheme(saved);
+      const container = document.querySelector('[data-theme]');
+      if (container) container.setAttribute('data-theme', saved);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "microtasktheme" : "dark";
+    setTheme(next);
+    localStorage.setItem("theme", next);
+    const container = document.querySelector('[data-theme]');
+    if (container) container.setAttribute('data-theme', next);
+  };
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,6 +80,12 @@ const Navbar = () => {
               <>
                 <Link 
                   className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/tasks"
+                >
+                  Browse Tasks
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
                   to="/login"
                 >
                   Login
@@ -69,24 +96,22 @@ const Navbar = () => {
                 >
                   Register
                 </Link>
-                <Link 
-                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
-                  to="/tasks"
+                <button
+                  onClick={toggleTheme}
+                  className="ml-2 p-2 rounded-md bg-white/20 hover:bg-white/30 transition-colors"
+                  title="Toggle theme"
                 >
-                  Browse Tasks
-                </Link>
-                <motion.a
-                  href="https://github.com/YourClientRepo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-yellow-400 text-black px-4 py-2 rounded-md text-sm font-bold hover:bg-yellow-300 transition-colors"
-                  animate={pulseAnimation}
-                >
-                  Join as Developer
-                </motion.a>
+                  {theme === 'dark' ? '🌙' : '☀️'}
+                </button>
               </>
             ) : (
               <>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/"
+                >
+                  Home
+                </Link>
                 <Link 
                   className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
                   to="/dashboard"
@@ -98,6 +123,12 @@ const Navbar = () => {
                   to="/tasks"
                 >
                   Browse Tasks
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/dashboard/purchase"
+                >
+                  Purchase Coin
                 </Link>
                 <Link 
                   className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
@@ -117,24 +148,38 @@ const Navbar = () => {
                       <Link to="/dashboard/my-tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         My Tasks
                       </Link>
-                      <Link to="/dashboard/my-submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        My Submissions
-                      </Link>
-                      <Link to="/dashboard/payment-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Payment History
-                      </Link>
-                      <Link to="/dashboard/purchase-coin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Purchase Coins
-                      </Link>
-                      <Link to="/dashboard/withdraw" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        Withdraw
-                      </Link>
+                      {role === 'buyer' && (
+                        <>
+                          <Link to="/dashboard/my-tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Tasks</Link>
+                          <Link to="/dashboard/purchase" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Purchase Coins</Link>
+                          <Link to="/dashboard/payment-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Payment History</Link>
+                        </>
+                      )}
+                      {role === 'worker' && (
+                        <>
+                          <Link to="/dashboard/submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">My Submissions</Link>
+                          <Link to="/dashboard/withdrawals" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Withdrawals</Link>
+                        </>
+                      )}
+                      {role === 'admin' && (
+                        <>
+                          <Link to="/dashboard/manage-users" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage Users</Link>
+                          <Link to="/dashboard/manage-task" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Manage Task</Link>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
                 <div className="bg-white/20 px-3 py-1 rounded-full text-sm">
                   Coins: {coins}
                 </div>
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-md bg-white/20 hover:bg-white/30 transition-colors"
+                  title="Toggle theme"
+                >
+                  {theme === 'dark' ? '🌙' : '☀️'}
+                </button>
                 <button 
                   onClick={handleLogout} 
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
@@ -175,6 +220,13 @@ const Navbar = () => {
                 <>
                   <Link 
                     className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/tasks"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Browse Tasks
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
                     to="/login"
                     onClick={() => setIsOpen(false)}
                   >
@@ -187,26 +239,22 @@ const Navbar = () => {
                   >
                     Register
                   </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/tasks"
-                    onClick={() => setIsOpen(false)}
+                  <button 
+                    onClick={() => { toggleTheme(); setIsOpen(false); }}
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-gray-100 hover:bg-gray-200"
                   >
-                    Browse Tasks
-                  </Link>
-                  <motion.a
-                    href="https://github.com/YourClientRepo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-3 py-2 bg-yellow-400 text-black rounded-md text-base font-bold hover:bg-yellow-300"
-                    animate={pulseAnimation}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Join as Developer
-                  </motion.a>
+                    Toggle Theme {theme === 'dark' ? '🌙' : '☀️'}
+                  </button>
                 </>
               ) : (
                 <>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Home
+                  </Link>
                   <Link 
                     className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
                     to="/dashboard"
@@ -223,6 +271,13 @@ const Navbar = () => {
                   </Link>
                   <Link 
                     className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/dashboard/purchase"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Purchase Coin
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
                     to="/profile"
                     onClick={() => setIsOpen(false)}
                   >
@@ -235,23 +290,32 @@ const Navbar = () => {
                   >
                     My Tasks
                   </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/dashboard/my-submissions"
-                    onClick={() => setIsOpen(false)}
+                  {role === 'buyer' && (
+                    <>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/my-tasks" onClick={() => setIsOpen(false)}>My Tasks</Link>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/purchase" onClick={() => setIsOpen(false)}>Purchase Coins</Link>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/payment-history" onClick={() => setIsOpen(false)}>Payment History</Link>
+                    </>
+                  )}
+                  {role === 'worker' && (
+                    <>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/submissions" onClick={() => setIsOpen(false)}>My Submissions</Link>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/withdrawals" onClick={() => setIsOpen(false)}>Withdrawals</Link>
+                    </>
+                  )}
+                  {role === 'admin' && (
+                    <>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/manage-users" onClick={() => setIsOpen(false)}>Manage Users</Link>
+                      <Link className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" to="/dashboard/manage-task" onClick={() => setIsOpen(false)}>Manage Task</Link>
+                    </>
+                  )}
+                  <div className="px-3 py-2 text-gray-500 text-sm">Coins: {coins}</div>
+                  <button 
+                    onClick={() => { toggleTheme(); setIsOpen(false); }}
+                    className="block w-full text-left px-3 py-2 rounded-md text-base font-medium bg-gray-100 hover:bg-gray-200"
                   >
-                    My Submissions
-                  </Link>
-                  <Link 
-                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
-                    to="/dashboard/payment-history"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Payment History
-                  </Link>
-                  <div className="px-3 py-2 text-gray-500 text-sm">
-                    Coins: {coins}
-                  </div>
+                    Toggle Theme {theme === 'dark' ? '🌙' : '☀️'}
+                  </button>
                   <button 
                     onClick={() => {
                       handleLogout();

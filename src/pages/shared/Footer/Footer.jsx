@@ -29,25 +29,25 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Quick Links (Only existing routes) */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/about" className="hover:text-yellow-300 transition-colors">About Us</a>
-              <a href="/contact" className="hover:text-yellow-300 transition-colors">Contact</a>
-              <a href="/jobs" className="hover:text-yellow-300 transition-colors">Jobs</a>
-              <a href="/press" className="hover:text-yellow-300 transition-colors">Press Kit</a>
+              <a href="/" className="hover:text-yellow-300 transition-colors">Home</a>
+              <a href="/tasks" className="hover:text-yellow-300 transition-colors">Browse Tasks</a>
+              <a href="/login" className="hover:text-yellow-300 transition-colors">Login</a>
+              <a href="/register" className="hover:text-yellow-300 transition-colors">Register</a>
             </nav>
           </div>
 
-          {/* Support */}
+          {/* Support (placeholder-free) */}
           <div>
             <h4 className="text-lg font-semibold mb-4">Support</h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/help" className="hover:text-yellow-300 transition-colors">Help Center</a>
-              <a href="/faq" className="hover:text-yellow-300 transition-colors">FAQ</a>
-              <a href="/privacy" className="hover:text-yellow-300 transition-colors">Privacy Policy</a>
-              <a href="/terms" className="hover:text-yellow-300 transition-colors">Terms of Service</a>
+              <a href="/dashboard" className="hover:text-yellow-300 transition-colors">Dashboard</a>
+              <a href="/profile" className="hover:text-yellow-300 transition-colors">Profile</a>
+              <a href="/dashboard/payment-history" className="hover:text-yellow-300 transition-colors">Payment History</a>
+              <a href="/dashboard/withdrawals" className="hover:text-yellow-300 transition-colors">Withdrawals</a>
             </nav>
           </div>
         </div>
