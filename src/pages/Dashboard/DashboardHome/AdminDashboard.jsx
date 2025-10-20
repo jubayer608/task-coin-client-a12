@@ -1,6 +1,8 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { motion } from "framer-motion";
+import { FaUsers, FaUserTie, FaCoins, FaCreditCard, FaChartLine, FaTrophy, FaClock } from "react-icons/fa";
 
 const AdminDashboard = () => {
   const queryClient = useQueryClient();
@@ -44,61 +46,201 @@ const AdminDashboard = () => {
 
   // ----------------- JSX -----------------
   return (
-    <div className="p-4 space-y-8">
-      <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
+    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      {/* Header */}
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h2>
+        <p className="text-gray-600">Platform overview and management</p>
+      </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="p-4 bg-blue-100 rounded-lg text-center">
-          <h4 className="font-bold">Total Workers</h4>
-          <p>{stats.totalWorkers}</p>
-        </div>
-        <div className="p-4 bg-green-100 rounded-lg text-center">
-          <h4 className="font-bold">Total Buyers</h4>
-          <p>{stats.totalBuyers}</p>
-        </div>
-        <div className="p-4 bg-yellow-100 rounded-lg text-center">
-          <h4 className="font-bold">Total Coins</h4>
-          <p>{stats.totalCoins}</p>
-        </div>
-        <div className="p-4 bg-purple-100 rounded-lg text-center">
-          <h4 className="font-bold">Total Payments</h4>
-          <p>{stats.totalPayments}</p>
-        </div>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-blue-100 text-sm font-medium">Total Workers</p>
+              <p className="text-3xl font-bold">{stats.totalWorkers || 0}</p>
+            </div>
+            <FaUsers className="text-4xl text-blue-200" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-green-100 text-sm font-medium">Total Buyers</p>
+              <p className="text-3xl font-bold">{stats.totalBuyers || 0}</p>
+            </div>
+            <FaUserTie className="text-4xl text-green-200" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-xl text-white shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-yellow-100 text-sm font-medium">Total Coins</p>
+              <p className="text-3xl font-bold">{stats.totalCoins || 0}</p>
+            </div>
+            <FaCoins className="text-4xl text-yellow-200" />
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white shadow-lg"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-purple-100 text-sm font-medium">Total Payments</p>
+              <p className="text-3xl font-bold">{stats.totalPayments || 0}</p>
+            </div>
+            <FaCreditCard className="text-4xl text-purple-200" />
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-white rounded-xl shadow-lg p-6"
+        >
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <FaChartLine className="mr-2 text-primary" />
+            Platform Growth
+          </h3>
+          <div className="h-64 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
+            <div className="text-center">
+              <FaChartLine className="text-6xl text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg">Growth Chart</p>
+              <p className="text-gray-400 text-sm">User registration and activity trends</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-white rounded-xl shadow-lg p-6"
+        >
+          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <FaTrophy className="mr-2 text-primary" />
+            Top Performers
+          </h3>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+              <div className="flex items-center">
+                <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">1</div>
+                <div>
+                  <p className="font-semibold text-gray-900">Top Worker</p>
+                  <p className="text-sm text-gray-600">Most completed tasks</p>
+                </div>
+              </div>
+              <FaTrophy className="text-yellow-500" />
+            </div>
+            <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center">
+                <div className="w-8 h-8 bg-gray-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">2</div>
+                <div>
+                  <p className="font-semibold text-gray-900">Top Buyer</p>
+                  <p className="text-sm text-gray-600">Most tasks posted</p>
+                </div>
+              </div>
+              <FaUserTie className="text-gray-500" />
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       {/* Withdraw Requests */}
-      <div>
-        <h3 className="text-xl font-bold mb-4">Withdraw Requests</h3>
-        <table className="table w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>User Email</th>
-              <th>Amount</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {withdrawals.map((w) => (
-              <tr
-                key={w._id?.$oid || w._id}
-                className="hover:bg-gray-100 transition"
-              >
-                <td>{w.worker_email}</td>
-                <td>{w.withdrawal_coin}</td>
-                <td>
-                  <button
-                    className="btn btn-success btn-sm"
-                    onClick={() => handlePaymentSuccess(w._id?.$oid || w._id)}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+        className="bg-white rounded-xl shadow-lg overflow-hidden"
+      >
+        <div className="p-6 border-b border-gray-200">
+          <h3 className="text-xl font-bold text-gray-900 flex items-center">
+            <FaClock className="mr-2 text-primary" />
+            Withdraw Requests
+          </h3>
+          <p className="text-gray-600 text-sm">Pending withdrawal approvals</p>
+        </div>
+        
+        {withdrawals.length === 0 ? (
+          <div className="p-12 text-center">
+            <FaCreditCard className="text-6xl text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-500 text-xl mb-2">No pending withdrawals</p>
+            <p className="text-gray-400">All withdrawal requests have been processed</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User Email</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {withdrawals.map((w, index) => (
+                  <motion.tr
+                    key={w._id?.$oid || w._id}
+                    className="hover:bg-gray-50 transition-colors"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    Payment Success
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {w.worker_email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
+                        {w.withdrawal_coin} coins
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {w.createdAt ? new Date(w.createdAt).toLocaleDateString() : "N/A"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                        onClick={() => handlePaymentSuccess(w._id?.$oid || w._id)}
+                      >
+                        Approve Payment
+                      </motion.button>
+                    </td>
+                  </motion.tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 };

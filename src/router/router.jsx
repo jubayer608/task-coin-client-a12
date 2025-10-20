@@ -23,6 +23,7 @@ import ErrorPage from "../components/ErrorPage";
 import AdminRoute from "../routes/AdminRoute";
 import WorkerRoute from "../routes/WorkerRoute";
 import BuyerRoute from "../routes/BuyerRoute";
+import AllTasks from "../pages/AllTasks/AllTasks";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             <Profile></Profile>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/tasks",
+        Component: AllTasks,
       },
       {
         path:"/forbidden",

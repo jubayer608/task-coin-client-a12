@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -23,7 +24,7 @@ export default {
           "info": "#3B82F6",      // Same as primary
           "success": "#10B981",   // Same as secondary
           "warning": "#F59E0B",   // Same as accent
-          "error": "#EF4444",     // Red for errors
+          "error": "#EF4444",     // Red for errors (4th color)
         },
       },
       "light",
