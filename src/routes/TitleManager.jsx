@@ -6,6 +6,7 @@ const routeTitles = {
   "/login": "Login | TaskCoin",
   "/register": "Register | TaskCoin",
   "/profile": "Profile | TaskCoin",
+  "/tasks": "All Tasks | TaskCoin",
   // Dashboard main
   "/dashboard/home": "Home | TaskCoin",
   "/dashboard/add-tasks": "Add Task | TaskCoin",

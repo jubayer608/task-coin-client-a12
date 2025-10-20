@@ -1,27 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 import { motion } from "framer-motion";
-import { FaSortAmountDown, FaSortAmountUp, FaFilter, FaClock, FaDollarSign, FaUsers } from "react-icons/fa";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FaSortAmountDown, FaSortAmountUp, FaClock, FaDollarSign, FaUsers } from "react-icons/fa";
+import useAxios from "../hooks/useAxios";
 
-const TaskList = () => {
-  const axiosSecure = useAxiosSecure();
+const AllTasks = () => {
+  const axiosInstance = useAxios();
   const [sortBy, setSortBy] = useState("deadline");
   const [sortOrder, setSortOrder] = useState("asc");
 
-  const { data: tasks = [], isLoading } = useQuery({
-    queryKey: ["tasks"],
+  const { data: tasks = [], isLoading, isError } = useQuery({
+    queryKey: ["publicTasks"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/tasks");
-      return res.data;
+      const res = await axiosInstance.get("/tasks");
+      return Array.isArray(res.data) ? res.data : [];
     },
   });
 
-  // Sort tasks based on selected criteria
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const sortedTasks = [...tasks].sort((a, b) => {
     let aValue, bValue;
-    
     switch (sortBy) {
       case "price":
         aValue = parseFloat(a.payable_amount);
@@ -36,15 +38,13 @@ const TaskList = () => {
         bValue = parseInt(b.required_workers);
         break;
       default:
-        aValue = a.task_title;
-        bValue = b.task_title;
+        aValue = a.task_title || "";
+        bValue = b.task_title || "";
     }
-
     if (sortOrder === "asc") {
       return aValue > bValue ? 1 : -1;
-    } else {
-      return aValue < bValue ? 1 : -1;
     }
+    return aValue < bValue ? 1 : -1;
   });
 
   if (isLoading) {
@@ -55,21 +55,29 @@ const TaskList = () => {
     );
   }
 
+  if (isError) {
+    return (
+      <div className="max-w-3xl mx-auto py-20 px-4 text-center">
+        <h2 className="text-2xl font-bold text-error mb-2">Failed to load tasks</h2>
+        <p className="text-base-content/70">Please try again later.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center mb-10">
         <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
-          Available Tasks
+          All Tasks
         </h2>
-        <p className="text-base-content/70 text-lg">Find the perfect task for your skills</p>
+        <p className="text-base-content/70 text-lg">Browse public tasks and get started</p>
       </div>
 
-      {/* Sorting Controls */}
+      {/* Sorting */}
       <div className="bg-base-100 rounded-xl shadow-lg p-6 mb-8 border border-base-300">
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
           <div className="flex items-center space-x-4">
-            <FaFilter className="text-primary text-xl" />
             <span className="font-semibold text-base-content">Sort by:</span>
             <select
               value={sortBy}
@@ -82,32 +90,31 @@ const TaskList = () => {
               <option value="title">Title</option>
             </select>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setSortOrder("asc")}
               className={`btn ${sortOrder === "asc" ? "btn-primary" : "btn-outline"}`}
             >
               <FaSortAmountUp />
-              <span>Ascending</span>
+              <span className="ml-2">Ascending</span>
             </button>
             <button
               onClick={() => setSortOrder("desc")}
               className={`btn ${sortOrder === "desc" ? "btn-primary" : "btn-outline"}`}
             >
               <FaSortAmountDown />
-              <span>Descending</span>
+              <span className="ml-2">Descending</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Tasks Grid */}
+      {/* Grid */}
       {sortedTasks.length === 0 ? (
         <div className="text-center py-20">
-          <div className="text-gray-400 text-6xl mb-4">📝</div>
-          <p className="text-gray-500 text-xl">No tasks available at the moment.</p>
-          <p className="text-gray-400">Check back later for new opportunities!</p>
+          <div className="text-base-content/40 text-6xl mb-4">📝</div>
+          <p className="text-base-content/70 text-xl">No tasks available right now.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -116,53 +123,55 @@ const TaskList = () => {
               key={task._id}
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              whileHover={{ scale: 1.03 }}
               className="bg-base-100 rounded-xl shadow-lg border border-base-300 overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
-              {/* Card Header */}
-              <div className="bg-gradient-to-r from-primary via-secondary to-accent p-6 text-white">
-                <h3 className="text-xl font-bold mb-2 line-clamp-2">
-                  {task.task_title}
-                </h3>
-                <p className="text-white/80 text-sm">
-                  Buyer: {task.buyerId}
-                </p>
+              {/* Image */}
+              <div className="aspect-[16/9] bg-base-200 overflow-hidden">
+                {task.task_image_url ? (
+                  <img
+                    src={task.task_image_url}
+                    alt={task.task_title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-base-content/40">
+                    No Image
+                  </div>
+                )}
               </div>
 
-              {/* Card Body */}
+              {/* Content */}
               <div className="p-6">
-                {/* Task Details */}
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center text-base-content/70">
-                    <FaClock className="mr-2 text-primary" />
-                    <span className="text-sm">
-                      Deadline: {new Date(task.completion_date).toLocaleDateString()}
-                    </span>
+                <h3 className="text-xl font-bold mb-2 line-clamp-2 text-base-content">
+                  {task.task_title}
+                </h3>
+                <p className="text-base-content/70 line-clamp-2 mb-4">
+                  {task.task_detail}
+                </p>
+
+                <div className="flex items-center justify-between text-sm text-base-content/70 mb-4">
+                  <div className="flex items-center">
+                    <FaClock className="mr-1 text-primary" />
+                    {task.completion_date ? new Date(task.completion_date).toLocaleDateString() : "N/A"}
                   </div>
-                  
-                  <div className="flex items-center text-base-content/70">
-                    <FaDollarSign className="mr-2 text-green-500" />
-                    <span className="text-sm font-semibold">
-                      Payable: ${task.payable_amount}
-                    </span>
-                  </div>
-                  
-                  <div className="flex items-center text-base-content/70">
-                    <FaUsers className="mr-2 text-blue-500" />
-                    <span className="text-sm">
-                      Workers Needed: {task.required_workers}
-                    </span>
+                  <div className="flex items-center">
+                    <FaUsers className="mr-1 text-secondary" />
+                    {task.required_workers}
                   </div>
                 </div>
 
-                {/* Action Button */}
-                <div className="pt-4 border-t border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center text-secondary font-bold">
+                    <FaDollarSign className="mr-1" />
+                    <span className="text-lg">${task.payable_amount}</span>
+                  </div>
                   <Link
                     to={`/dashboard/tasks/${task._id}`}
-                    className="btn btn-primary w-full"
+                    className="btn btn-primary"
                   >
-                    View Details
+                    See more
                   </Link>
                 </div>
               </div>
@@ -174,4 +183,4 @@ const TaskList = () => {
   );
 };
 
-export default TaskList;
+export default AllTasks;

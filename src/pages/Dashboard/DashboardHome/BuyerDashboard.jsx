@@ -81,91 +81,87 @@ const BuyerDashboard = () => {
 
   return (
     <div className="max-w-6xl mx-auto py-10 px-4">
-      <h2 className="text-3xl font-bold text-primary mb-6">
-        Welcome, {user.displayName || "Buyer"}
+      <h2 className="text-3xl font-bold text-base-content mb-6">
+        Welcome, <span className="text-primary">{user.displayName || "Buyer"}</span>
       </h2>
 
       {/* Stats */}
       <div className="grid md:grid-cols-3 gap-6 mb-10">
         <motion.div
-          className="bg-blue-100 p-6 rounded-lg shadow text-center"
-          whileHover={{ scale: 1.05 }}
+          className="p-6 rounded-xl shadow bg-gradient-to-r from-blue-500 to-blue-600 text-white text-center"
+          whileHover={{ scale: 1.03 }}
         >
-          <p className="text-gray-700 font-semibold">Total Tasks Added</p>
-          <p className="text-2xl font-bold text-blue-700">
-            {stats.totalTasks || 0}
-          </p>
+          <p className="text-blue-100 font-medium">Total Tasks Added</p>
+          <p className="text-3xl font-extrabold">{stats.totalTasks || 0}</p>
         </motion.div>
 
         <motion.div
-          className="bg-yellow-100 p-6 rounded-lg shadow text-center"
-          whileHover={{ scale: 1.05 }}
+          className="p-6 rounded-xl shadow bg-gradient-to-r from-yellow-500 to-yellow-600 text-white text-center"
+          whileHover={{ scale: 1.03 }}
         >
-          <p className="text-gray-700 font-semibold">Pending Workers</p>
-          <p className="text-2xl font-bold text-yellow-700">
-            {stats.pendingWorkers || 0}
-          </p>
+          <p className="text-yellow-100 font-medium">Pending Workers</p>
+          <p className="text-3xl font-extrabold">{stats.pendingWorkers || 0}</p>
         </motion.div>
 
         <motion.div
-          className="bg-green-100 p-6 rounded-lg shadow text-center"
-          whileHover={{ scale: 1.05 }}
+          className="p-6 rounded-xl shadow bg-gradient-to-r from-green-500 to-green-600 text-white text-center"
+          whileHover={{ scale: 1.03 }}
         >
-          <p className="text-gray-700 font-semibold">Total Payment Paid</p>
-          <p className="text-2xl font-bold text-green-700">
-            ${stats.totalPaid || 0}
-          </p>
+          <p className="text-green-100 font-medium">Total Payment Paid</p>
+          <p className="text-3xl font-extrabold">${stats.totalPaid || 0}</p>
         </motion.div>
       </div>
 
       {/* Tasks to Review */}
-      <h3 className="text-xl font-semibold mb-4">Tasks To Review</h3>
+      <h3 className="text-xl font-semibold mb-4 text-base-content">Tasks To Review</h3>
 
       {submissions.length === 0 ? (
-        <p className="text-center text-gray-500">No pending submissions.</p>
+        <p className="text-center text-base-content/60">No pending submissions.</p>
       ) : (
-        <table className="table w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-200">
-            <tr>
-              <th>Worker Name</th>
-              <th>Task Title</th>
-              <th>Payable Amount</th>
-              <th>Submission</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {submissions.map((s) => (
-              <tr key={s._id} className="hover:bg-gray-100 transition">
-                <td>{s.worker_name}</td>
-                <td>{s.task_title}</td>
-                <td>${s.payable_amount}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-info"
-                    onClick={() => setModalContent(s.submission_details)}
-                  >
-                    View
-                  </button>
-                </td>
-                <td className="space-x-2">
-                  <button
-                    className="btn btn-sm btn-success"
-                    onClick={() => handleApprove(s._id)}
-                  >
-                    Approve
-                  </button>
-                  <button
-                    className="btn btn-sm btn-error"
-                    onClick={() => handleReject(s._id)}
-                  >
-                    Reject
-                  </button>
-                </td>
+        <div className="overflow-x-auto bg-base-100 rounded-xl shadow border border-base-300">
+          <table className="table w-full">
+            <thead className="bg-base-200">
+              <tr>
+                <th>Worker Name</th>
+                <th>Task Title</th>
+                <th>Payable Amount</th>
+                <th>Submission</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {submissions.map((s) => (
+                <tr key={s._id} className="hover:bg-base-200/60 transition">
+                  <td>{s.worker_name}</td>
+                  <td>{s.task_title}</td>
+                  <td>${s.payable_amount}</td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-info"
+                      onClick={() => setModalContent(s.submission_details)}
+                    >
+                      View
+                    </button>
+                  </td>
+                  <td className="space-x-2">
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => handleApprove(s._id)}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => handleReject(s._id)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {/* Modal */}

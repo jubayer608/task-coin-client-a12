@@ -35,11 +35,11 @@ const FeaturedTasks = () => {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+    <section className="py-16 px-4 md:px-8 bg-base-100">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">Featured Tasks</h2>
-          <p className="text-neutral text-lg">Discover high-paying tasks available now</p>
+          <p className="text-base-content/70 text-lg">Discover high-paying tasks available now</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -50,10 +50,10 @@ const FeaturedTasks = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.05 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300"
+              className="bg-base-100 rounded-xl shadow-lg border border-base-300 overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
               <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${task.image})` }}>
-                <div className="h-full bg-opacity-40 flex items-end">
+                <div className="h-full bg-black/30 flex items-end">
                   <div className="p-4 text-white">
                     <h3 className="text-xl font-bold">{task.title}</h3>
                   </div>
@@ -61,9 +61,9 @@ const FeaturedTasks = () => {
               </div>
               
               <div className="p-6">
-                <p className="text-gray-600 mb-4">{task.description}</p>
+                <p className="text-base-content/70 mb-4">{task.description}</p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                <div className="flex items-center justify-between text-sm text-base-content/70 mb-4">
                   <div className="flex items-center">
                     <FaClock className="mr-1" />
                     {task.deadline}
@@ -81,7 +81,7 @@ const FeaturedTasks = () => {
                   </div>
                   <Link
                     to="/tasks"
-                    className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300"
+                    className="btn btn-primary"
                   >
                     View Details
                   </Link>
@@ -94,7 +94,7 @@ const FeaturedTasks = () => {
         <div className="text-center mt-8">
           <Link
             to="/tasks"
-            className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
+            className="btn btn-primary"
           >
             View All Tasks
           </Link>
