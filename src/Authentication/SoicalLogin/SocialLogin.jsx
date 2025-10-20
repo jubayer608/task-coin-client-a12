@@ -1,6 +1,10 @@
 import { useNavigate, useLocation } from "react-router";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { motion } from "framer-motion";
+import { FaGoogle } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaGoogle } from "react-icons/fa";
 
 const SocialLogin = () => {
   const { signInWithGoogle } = useAuth();
@@ -39,11 +43,15 @@ const SocialLogin = () => {
   };
 
   return (
-    <div>
-      <button onClick={handleGoogle} className="btn btn-outline w-full mt-3">
-        Continue with Google
-      </button>
-    </div>
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={handleGoogle}
+      className="w-full bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-4 px-6 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-3"
+    >
+      <FaGoogle className="text-red-500 text-xl" />
+      <span>Continue with Google</span>
+    </motion.button>
   );
 };
 
