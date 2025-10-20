@@ -32,7 +32,7 @@ const slides = [
 
 const Banner = () => {
   return (
-    <div className="w-full my-10">
+    <div className="w-full">
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={0}
@@ -40,7 +40,7 @@ const Banner = () => {
         loop={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        className="w-full  h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] shadow-2xl"
+        className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] shadow-2xl"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>

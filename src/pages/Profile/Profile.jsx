@@ -33,13 +33,13 @@ const Profile = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white rounded-2xl shadow-xl overflow-hidden"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
         >
           {/* Profile Header */}
           <div className="bg-gradient-to-r from-primary via-secondary to-accent p-8 text-white">
@@ -84,41 +84,41 @@ const Profile = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Personal Information */}
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
                   <FaUser className="mr-2 text-primary" />
                   Personal Information
                 </h2>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <FaEnvelope className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Email Address</p>
-                      <p className="font-semibold">{user?.email || profile?.email || "Not provided"}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Email Address</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{user?.email || profile?.email || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <FaPhone className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Phone Number</p>
-                      <p className="font-semibold">{profile?.phone || "Not provided"}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Phone Number</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{profile?.phone || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <FaMapMarkerAlt className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Address</p>
-                      <p className="font-semibold">{profile?.address || "Not provided"}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Address</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">{profile?.address || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <FaCalendarAlt className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Member Since</p>
-                      <p className="font-semibold">
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Member Since</p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
                         {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "N/A"}
                       </p>
                     </div>
