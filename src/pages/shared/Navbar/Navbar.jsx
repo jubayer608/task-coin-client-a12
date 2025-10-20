@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import { FaSun, FaMoon } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +10,20 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [isOpen, setIsOpen] = useState(false);
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "microtasktheme");
+
+  // Sync theme to wrapper [data-theme]
+  React.useEffect(() => {
+    const rootWithTheme = document.querySelector('[data-theme]');
+    if (rootWithTheme) {
+      rootWithTheme.setAttribute('data-theme', theme);
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === "dark" ? "microtasktheme" : "dark"));
+  };
 
   // Framer Motion animation
   const pulseAnimation = {
@@ -75,15 +90,13 @@ const Navbar = () => {
                 >
                   Browse Tasks
                 </Link>
-                <motion.a
-                  href="https://github.com/YourClientRepo"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-yellow-400 text-black px-4 py-2 rounded-md text-sm font-bold hover:bg-yellow-300 transition-colors"
-                  animate={pulseAnimation}
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-md bg-white/20 hover:bg-white/30 transition-colors"
+                  title="Toggle theme"
                 >
-                  Join as Developer
-                </motion.a>
+                  {theme === 'dark' ? <FaSun /> : <FaMoon />}
+                </button>
               </>
             ) : (
               <>
@@ -135,6 +148,13 @@ const Navbar = () => {
                 <div className="bg-white/20 px-3 py-1 rounded-full text-sm">
                   Coins: {coins}
                 </div>
+                <button
+                  onClick={toggleTheme}
+                  className="p-2 rounded-md bg-white/20 hover:bg-white/30 transition-colors"
+                  title="Toggle theme"
+                >
+                  {theme === 'dark' ? <FaSun /> : <FaMoon />}
+                </button>
                 <button 
                   onClick={handleLogout} 
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
@@ -194,16 +214,12 @@ const Navbar = () => {
                   >
                     Browse Tasks
                   </Link>
-                  <motion.a
-                    href="https://github.com/YourClientRepo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block px-3 py-2 bg-yellow-400 text-black rounded-md text-base font-bold hover:bg-yellow-300"
-                    animate={pulseAnimation}
-                    onClick={() => setIsOpen(false)}
+                  <button
+                    onClick={() => { toggleTheme(); setIsOpen(false); }}
+                    className="block w-full text-left px-3 py-2 rounded-md bg-gray-100 text-gray-800"
                   >
-                    Join as Developer
-                  </motion.a>
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                  </button>
                 </>
               ) : (
                 <>
@@ -252,6 +268,12 @@ const Navbar = () => {
                   <div className="px-3 py-2 text-gray-500 text-sm">
                     Coins: {coins}
                   </div>
+                  <button 
+                    onClick={() => { toggleTheme(); setIsOpen(false); }}
+                    className="block w-full text-left px-3 py-2 rounded-md bg-gray-100 text-gray-800"
+                  >
+                    {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
+                  </button>
                   <button 
                     onClick={() => {
                       handleLogout();

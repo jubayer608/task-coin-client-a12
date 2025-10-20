@@ -33,10 +33,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/about" className="hover:text-yellow-300 transition-colors">About Us</a>
-              <a href="/contact" className="hover:text-yellow-300 transition-colors">Contact</a>
-              <a href="/jobs" className="hover:text-yellow-300 transition-colors">Jobs</a>
-              <a href="/press" className="hover:text-yellow-300 transition-colors">Press Kit</a>
+              <a href="https://taskcoin.example.com/about" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">About Us</a>
+              <a href="https://taskcoin.example.com/contact" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Contact</a>
+              <a href="https://taskcoin.example.com/careers" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Careers</a>
+              <a href="https://taskcoin.example.com/press" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Press Kit</a>
             </nav>
           </div>
 
@@ -44,10 +44,10 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Support</h4>
             <nav className="flex flex-col space-y-2">
-              <a href="/help" className="hover:text-yellow-300 transition-colors">Help Center</a>
-              <a href="/faq" className="hover:text-yellow-300 transition-colors">FAQ</a>
-              <a href="/privacy" className="hover:text-yellow-300 transition-colors">Privacy Policy</a>
-              <a href="/terms" className="hover:text-yellow-300 transition-colors">Terms of Service</a>
+              <a href="https://taskcoin.example.com/help" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Help Center</a>
+              <a href="https://taskcoin.example.com/faq" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">FAQ</a>
+              <a href="https://taskcoin.example.com/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Privacy Policy</a>
+              <a href="https://taskcoin.example.com/terms" target="_blank" rel="noopener noreferrer" className="hover:text-yellow-300 transition-colors">Terms of Service</a>
             </nav>
           </div>
         </div>
