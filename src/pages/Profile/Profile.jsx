@@ -100,17 +100,40 @@ const Profile = () => {
                   
                   <div className="flex items-center p-4 bg-gray-50 rounded-lg">
                     <FaPhone className="text-primary mr-3" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm text-gray-500">Phone Number</p>
                       <p className="font-semibold">{profile?.phone || "Not provided"}</p>
+                      {!profile?.phone && (
+                        <button className="text-primary text-sm hover:underline mt-1">
+                          Add phone number
+                        </button>
+                      )}
                     </div>
                   </div>
                   
                   <div className="flex items-center p-4 bg-gray-50 rounded-lg">
                     <FaMapMarkerAlt className="text-primary mr-3" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm text-gray-500">Address</p>
                       <p className="font-semibold">{profile?.address || "Not provided"}</p>
+                      {!profile?.address && (
+                        <button className="text-primary text-sm hover:underline mt-1">
+                          Add address
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                    <FaShieldAlt className="text-primary mr-3" />
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-500">Account Status</p>
+                      <div className="flex items-center mt-1">
+                        <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold mr-2">
+                          Verified
+                        </span>
+                        <span className="font-semibold text-green-600">Active</span>
+                      </div>
                     </div>
                   </div>
                   
@@ -134,25 +157,69 @@ const Profile = () => {
                 </h2>
                 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white">
-                    <div className="text-3xl font-bold">{profile?.coin || 0}</div>
-                    <div className="text-blue-100">Total Coins</div>
-                  </div>
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-3xl font-bold">{profile?.coin || 0}</div>
+                        <div className="text-blue-100">Total Coins</div>
+                      </div>
+                      <FaCoins className="text-4xl text-blue-200" />
+                    </div>
+                  </motion.div>
                   
-                  <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white">
-                    <div className="text-3xl font-bold">{profile?.completedTasks || 0}</div>
-                    <div className="text-green-100">Tasks Completed</div>
-                  </div>
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-3xl font-bold">{profile?.completedTasks || 0}</div>
+                        <div className="text-green-100">Tasks Completed</div>
+                      </div>
+                      <div className="text-4xl text-green-200">✅</div>
+                    </div>
+                  </motion.div>
                   
-                  <div className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white">
-                    <div className="text-3xl font-bold">{profile?.rating || "N/A"}</div>
-                    <div className="text-purple-100">Rating</div>
-                  </div>
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white shadow-lg"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-3xl font-bold">{profile?.rating || "5.0"}</div>
+                        <div className="text-purple-100">Rating</div>
+                      </div>
+                      <div className="text-4xl text-purple-200">⭐</div>
+                    </div>
+                  </motion.div>
                   
-                  <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl text-white">
-                    <div className="text-3xl font-bold">{profile?.level || 1}</div>
-                    <div className="text-orange-100">Level</div>
+                  <motion.div 
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 rounded-xl text-white shadow-lg"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-3xl font-bold">{profile?.level || 1}</div>
+                        <div className="text-orange-100">Level</div>
+                      </div>
+                      <div className="text-4xl text-orange-200">🏆</div>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-700">Progress to Next Level</span>
+                    <span className="text-sm text-gray-500">75%</span>
                   </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">Complete 5 more tasks to reach Level 2</p>
                 </div>
               </div>
             </div>

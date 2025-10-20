@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { FaClock, FaDollarSign, FaUsers } from "react-icons/fa";
+import UniformCard from "../../../components/UniformCard";
 
 const FeaturedTasks = () => {
   const featuredTasks = [
@@ -49,44 +50,21 @@ const FeaturedTasks = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
-              <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${task.image})` }}>
-                <div className="h-full bg-opacity-40 flex items-end">
-                  <div className="p-4 text-white">
-                    <h3 className="text-xl font-bold">{task.title}</h3>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <p className="text-gray-600 mb-4">{task.description}</p>
-                
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                  <div className="flex items-center">
-                    <FaClock className="mr-1" />
-                    {task.deadline}
-                  </div>
-                  <div className="flex items-center">
-                    <FaUsers className="mr-1" />
-                    {task.workers} workers
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center text-secondary font-bold">
-                    <FaDollarSign className="mr-1" />
-                    <span className="text-lg">${task.price}</span>
-                  </div>
-                  <Link
-                    to="/tasks"
-                    className="bg-gradient-to-r from-primary to-secondary text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
+              <UniformCard
+                title={task.title}
+                description={task.description}
+                image={task.image}
+                price={task.price}
+                badge="Featured"
+                link="/dashboard/tasklist"
+                buttonText="View Details"
+                metadata={[
+                  { icon: <FaClock />, text: task.deadline },
+                  { icon: <FaUsers />, text: `${task.workers} workers` }
+                ]}
+                variant="featured"
+              />
             </motion.div>
           ))}
         </div>
