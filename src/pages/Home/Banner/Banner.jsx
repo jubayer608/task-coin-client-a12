@@ -40,7 +40,7 @@ const Banner = () => {
         loop={true}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         pagination={{ clickable: true }}
-        className="w-full rounded-lg  h-[300px] md:h-[450px] lg:h-[500px]"
+        className="w-full  h-[250px] sm:h-[300px] md:h-[400px] lg:h-[500px] shadow-2xl"
       >
         {slides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -62,7 +62,7 @@ const Banner = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
-                  className="text-2xl md:text-5xl font-bold mb-4 drop-shadow-lg"
+                  className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-4 drop-shadow-lg"
                 >
                   {slide.title}
                 </motion.h1>
@@ -70,7 +70,7 @@ const Banner = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.4 }}
-                  className="text-base md:text-xl mb-6 text-gray-200 drop-shadow-md"
+                  className="text-sm sm:text-base md:text-lg lg:text-xl mb-6 text-gray-200 drop-shadow-md"
                 >
                   {slide.subtitle}
                 </motion.p>
@@ -78,7 +78,7 @@ const Banner = () => {
                   whileHover={{ scale: 1.05, boxShadow: "0px 8px 25px rgba(0,0,0,0.4)" }}
                   whileTap={{ scale: 0.95 }}
                   href="/register"
-                  className="btn bg-gradient-to-r from-primary to-secondary border-none text-white shadow-md"
+                  className="bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-xl font-semibold hover:shadow-lg transition-all duration-300"
                 >
                   Get Started
                 </motion.a>

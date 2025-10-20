@@ -45,11 +45,14 @@ const WhyChooseUsSection = () => {
   const toggle = (id) => setOpenId(openId === id ? null : id);
 
   return (
-    <section className="bg-base-200 py-20 rounded-lg">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-primary text-center mb-12">
-          Why Choose Us
-        </h2>
+    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
+            Why Choose Us
+          </h2>
+          <p className="text-neutral text-lg">Discover what makes TaskCoin the best choice for you</p>
+        </div>
 
         <div className="grid gap-6 max-w-4xl mx-auto">
           {whyChooseData.map((item, index) => (

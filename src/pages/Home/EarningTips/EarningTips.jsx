@@ -12,29 +12,34 @@ const tips = [
 ];
 
 const EarningTips = () => (
-  <section aria-labelledby="earning-tips-heading" className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10 rounded-lg">
-    <h2 id="earning-tips-heading" className="text-3xl font-bold text-center text-primary mb-12">
-      Earning Tips
-    </h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {tips.map((tip, index) => (
-        <motion.div
-          key={index}
-          className="card bg-white dark:bg-gray-900 text-base-content shadow-lg rounded-2xl p-6 border border-base-300 hover:border-primary hover:shadow-2xl transition-all duration-300"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 + index * 0.15, type: "spring", stiffness: 120 }}
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="flex items-center justify-center mb-5">
-            <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/20 text-primary text-3xl">
-              {tip.icon}
+  <section aria-labelledby="earning-tips-heading" className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+    <div className="max-w-7xl mx-auto">
+      <div className="text-center mb-12">
+        <h2 id="earning-tips-heading" className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
+          Earning Tips
+        </h2>
+        <p className="text-neutral text-lg">Maximize your earning potential with these proven strategies</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {tips.map((tip, index) => (
+          <motion.div
+            key={index}
+            className="bg-white shadow-lg rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-2xl transition-all duration-300"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 + index * 0.15, type: "spring", stiffness: 120 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="flex items-center justify-center mb-5">
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/20 text-primary text-3xl">
+                {tip.icon}
+              </div>
             </div>
-          </div>
-          <h3 className="text-xl font-bold mb-3 text-center text-gray-900 dark:text-gray-100">{tip.title}</h3>
-          <p className="text-gray-700 dark:text-gray-300 text-center">{tip.desc}</p>
-        </motion.div>
-      ))}
+            <h3 className="text-xl font-bold mb-3 text-center text-gray-900">{tip.title}</h3>
+            <p className="text-gray-700 text-center">{tip.desc}</p>
+          </motion.div>
+        ))}
+      </div>
     </div>
   </section>
 );

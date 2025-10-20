@@ -6,11 +6,13 @@ import TitleManager from '../routes/TitleManager';
 
 const RootLayouts = () => {
     return (
-        <div>
-            <TitleManager></TitleManager>
-            <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+        <div className="min-h-screen bg-gray-50">
+            <TitleManager />
+            <Navbar />
+            <main className="min-h-screen">
+                <Outlet />
+            </main>
+            <Footer />
         </div>
     );
 };

@@ -40,130 +40,234 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar sticky top-0 z-50 bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
-      {/* Logo */}
-      <div className="flex-1">
-        <Link
-          to ="/"
-          className="btn btn-ghost normal-case text-xl text-white hover:bg-primary/30"
-        >
-          🪙 TaskCoin
-        </Link>
-      </div>
-
-      {/* Desktop Menu */}
-      <div className="hidden md:flex gap-2 items-center">
-        {!user ? (
-          <>
-            <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/login">
-              Login
-            </Link>
-            <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/register">
-              Register
-            </Link>
-
-            <motion.a
-              href="https://github.com/YourClientRepo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-warning text-black font-bold"
-              animate={pulseAnimation}
+    <nav className="sticky top-0 z-50 w-full bg-gradient-to-r from-primary via-secondary to-accent text-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <Link
+              to="/"
+              className="text-xl font-bold text-white hover:text-yellow-300 transition-colors"
             >
-              Join as Developer
-            </motion.a>
-          </>
-        ) : (
-          <>
-            <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/dashboard">
-              Dashboard
+              🪙 TaskCoin
             </Link>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-4">
+            {!user ? (
+              <>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/login"
+                >
+                  Login
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/register"
+                >
+                  Register
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/tasks"
+                >
+                  Browse Tasks
+                </Link>
+                <motion.a
+                  href="https://github.com/YourClientRepo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-yellow-400 text-black px-4 py-2 rounded-md text-sm font-bold hover:bg-yellow-300 transition-colors"
+                  animate={pulseAnimation}
+                >
+                  Join as Developer
+                </motion.a>
+              </>
+            ) : (
+              <>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/dashboard"
+                >
+                  Dashboard
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/tasks"
+                >
+                  Browse Tasks
+                </Link>
+                <Link 
+                  className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors" 
+                  to="/profile"
+                >
+                  Profile
+                </Link>
+                <div className="relative group">
+                  <button className="text-white hover:text-yellow-300 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                    My Account
+                    <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div className="py-1">
+                      <Link to="/dashboard/my-tasks" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        My Tasks
+                      </Link>
+                      <Link to="/dashboard/my-submissions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        My Submissions
+                      </Link>
+                      <Link to="/dashboard/payment-history" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Payment History
+                      </Link>
+                      <Link to="/dashboard/purchase-coin" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Purchase Coins
+                      </Link>
+                      <Link to="/dashboard/withdraw" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        Withdraw
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white/20 px-3 py-1 rounded-full text-sm">
+                  Coins: {coins}
+                </div>
+                <button 
+                  onClick={handleLogout} 
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Mobile Hamburger */}
+          <div className="md:hidden">
             <button
-              className="btn btn-outline border-white text-white hover:bg-white hover:text-black"
-             
+              onClick={() => setIsOpen(!isOpen)}
+              className="text-white hover:text-yellow-300 p-2 rounded-md"
             >
-              Available Coin: {coins}
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
             </button>
-            <Link className="btn btn-ghost text-white hover:bg-primary/30" to="/profile">
-              Profile
-            </Link>
-            <button onClick={handleLogout} className="btn btn-error">
-              Logout
-            </button>
+          </div>
+        </div>
 
-            <motion.a
-              href="https://github.com/YourClientRepo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-warning text-black font-bold"
-              animate={pulseAnimation}
-            >
-              Join as Developer
-            </motion.a>
-          </>
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="md:hidden bg-white shadow-lg border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {!user ? (
+                <>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/register"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Register
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/tasks"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Browse Tasks
+                  </Link>
+                  <motion.a
+                    href="https://github.com/YourClientRepo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block px-3 py-2 bg-yellow-400 text-black rounded-md text-base font-bold hover:bg-yellow-300"
+                    animate={pulseAnimation}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Join as Developer
+                  </motion.a>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/dashboard"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/tasks"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Browse Tasks
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/profile"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/dashboard/my-tasks"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    My Tasks
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/dashboard/my-submissions"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    My Submissions
+                  </Link>
+                  <Link 
+                    className="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md text-base font-medium" 
+                    to="/dashboard/payment-history"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Payment History
+                  </Link>
+                  <div className="px-3 py-2 text-gray-500 text-sm">
+                    Coins: {coins}
+                  </div>
+                  <button 
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }} 
+                    className="block w-full text-left px-3 py-2 bg-red-500 text-white rounded-md text-base font-medium hover:bg-red-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         )}
       </div>
-
-      {/* Mobile Hamburger */}
-      <div className="flex-none md:hidden">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="btn btn-square btn-ghost text-white"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {isOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-base-200 shadow-md flex flex-col md:hidden p-2 gap-2 text-black">
-          {!user ? (
-            <>
-              <Link className="btn btn-ghost w-full" to="/login">Login</Link>
-              <Link className="btn btn-ghost w-full" to="/register">Register</Link>
-              <motion.a
-                href="https://github.com/YourClientRepo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary w-full"
-                animate={pulseAnimation}
-              >
-                Join as Developer
-              </motion.a>
-            </>
-          ) : (
-            <>
-              <Link className="btn btn-ghost w-full" to="/dashboard">Dashboard</Link>
-              <button className="btn btn-outline w-full">
-                Available Coin: {coins}
-              </button>
-              <Link className="btn btn-ghost w-full" to="/profile">Profile</Link>
-              <button onClick={handleLogout} className="btn btn-error w-full">Logout</button>
-              <motion.a
-                href="https://github.com/YourClientRepo"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary w-full"
-                animate={pulseAnimation}
-              >
-                Join as Developer
-              </motion.a>
-            </>
-          )}
-        </div>
-      )}
-    </div>
+    </nav>
   );
 };
 
