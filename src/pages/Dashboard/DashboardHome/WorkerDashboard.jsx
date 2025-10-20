@@ -36,10 +36,10 @@ const WorkerDashboard = () => {
     <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       {/* Welcome Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+        <h2 className="text-3xl font-bold text-base-content mb-2">
           Welcome back, {user.displayName || "Worker"}! 👋
         </h2>
-        <p className="text-gray-600">Here's your performance overview</p>
+        <p className="text-base-content/70">Here's your performance overview</p>
       </div>
 
       {/* Stats Cards */}
@@ -114,54 +114,54 @@ const WorkerDashboard = () => {
       </div>
 
       {/* Performance Chart Placeholder */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <div className="bg-base-200 rounded-xl shadow-lg p-6 mb-8 border border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 flex items-center">
+          <h3 className="text-xl font-bold text-base-content flex items-center">
             <FaChartLine className="mr-2 text-primary" />
             Performance Overview
           </h3>
           <div className="flex items-center space-x-2">
             <FaTrophy className="text-yellow-500" />
-            <span className="text-sm text-gray-600">Top Performer</span>
+            <span className="text-sm text-base-content/70">Top Performer</span>
           </div>
         </div>
         
-        <div className="h-64 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
+        <div className="h-64 bg-gradient-to-r from-base-100 to-base-300 rounded-lg flex items-center justify-center">
           <div className="text-center">
-            <FaChartLine className="text-6xl text-gray-300 mb-4" />
-            <p className="text-gray-500 text-lg">Performance Chart</p>
-            <p className="text-gray-400 text-sm">Visual representation of your work progress</p>
+            <FaChartLine className="text-6xl text-base-content/30 mb-4" />
+            <p className="text-base-content/70 text-lg">Performance Chart</p>
+            <p className="text-base-content/50 text-sm">Visual representation of your work progress</p>
           </div>
         </div>
       </div>
 
       {/* Recent Achievements */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+        <div className="bg-base-200 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold text-base-content mb-4 flex items-center">
             <FaStar className="mr-2 text-yellow-500" />
             Recent Achievements
           </h3>
           <div className="space-y-3">
-            <div className="flex items-center p-3 bg-yellow-50 rounded-lg">
+            <div className="flex items-center p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
               <FaTrophy className="text-yellow-500 mr-3" />
               <div>
-                <p className="font-semibold text-gray-900">First Submission</p>
-                <p className="text-sm text-gray-600">Completed your first task</p>
+                <p className="font-semibold text-base-content">First Submission</p>
+                <p className="text-sm text-base-content/70">Completed your first task</p>
               </div>
             </div>
-            <div className="flex items-center p-3 bg-green-50 rounded-lg">
+            <div className="flex items-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
               <FaStar className="text-green-500 mr-3" />
               <div>
-                <p className="font-semibold text-gray-900">Quality Worker</p>
-                <p className="text-sm text-gray-600">Maintained high quality standards</p>
+                <p className="font-semibold text-base-content">Quality Worker</p>
+                <p className="text-sm text-base-content/70">Maintained high quality standards</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
+        <div className="bg-base-200 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold text-base-content mb-4">Quick Actions</h3>
           <div className="space-y-3">
             <button className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
               Browse Available Tasks
@@ -177,10 +177,10 @@ const WorkerDashboard = () => {
       </div>
 
       {/* Approved Submissions Table */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">My Approved Submissions</h3>
-          <p className="text-gray-600 text-sm">Tasks that have been approved by buyers</p>
+      <div className="bg-base-200 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <h3 className="text-xl font-bold text-base-content">My Approved Submissions</h3>
+          <p className="text-base-content/70 text-sm">Tasks that have been approved by buyers</p>
         </div>
 
         {approvedSubmissions.length === 0 ? (

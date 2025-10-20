@@ -43,7 +43,7 @@ const RecentActivity = () => {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
+    <section className="py-16 px-4 md:px-8 bg-base-100">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
@@ -60,7 +60,7 @@ const RecentActivity = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+              className="bg-base-200 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
             >
               <div className="flex items-center space-x-4">
                 <div className="relative">
@@ -73,9 +73,9 @@ const RecentActivity = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <span className="font-semibold text-gray-900">{activity.user}</span>
-                    <span className="text-neutral">{activity.action}</span>
-                    <span className="font-medium text-gray-700">{activity.task}</span>
+                    <span className="font-semibold text-base-content">{activity.user}</span>
+                    <span className="text-base-content/60">{activity.action}</span>
+                    <span className="font-medium text-base-content/80">{activity.task}</span>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
                     <div className="flex items-center text-secondary">

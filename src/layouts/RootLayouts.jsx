@@ -6,7 +6,7 @@ import TitleManager from '../routes/TitleManager';
 
 const RootLayouts = () => {
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-base-100 text-base-content transition-colors duration-300">
             <TitleManager />
             <Navbar />
             <main className="min-h-screen">

@@ -36,7 +36,7 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-white">
+    <section className="py-16 px-4 md:px-8 bg-base-100">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
@@ -53,17 +53,17 @@ const Testimonial = () => {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center text-center px-4 md:px-16 bg-white rounded-xl shadow-xl p-6"
+              className="flex flex-col items-center text-center px-4 md:px-16 bg-base-200 rounded-xl shadow-xl p-6 border border-gray-200 dark:border-gray-700"
             >
               <img
                 src={testimonials[currentIndex].photo}
                 alt={testimonials[currentIndex].name}
                 className="w-24 h-24 rounded-full mb-4 border-4 border-primary shadow-md"
               />
-              <h3 className="text-xl font-semibold text-gray-800">
+              <h3 className="text-xl font-semibold text-base-content">
                 {testimonials[currentIndex].name}
               </h3>
-              <p className="mt-2 text-gray-600 italic">
+              <p className="mt-2 text-base-content/70 italic">
                 "{testimonials[currentIndex].quote}"
               </p>
             </motion.div>
