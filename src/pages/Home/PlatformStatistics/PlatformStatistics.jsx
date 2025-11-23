@@ -1,81 +1,170 @@
 import React from "react";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
-import { FaUsers, FaTasks, FaCoins } from "react-icons/fa";
+import { FaUsers, FaTasks, FaCoins, FaChartLine, FaTrophy, FaGlobe } from "react-icons/fa";
 
 const statsData = [
   {
-    icon: <FaUsers className="w-8 h-8" />,
-    title: "Total Users",
-    value: 8523,
-    desc: "registered so far",
+    icon: FaUsers,
+    title: "Active Users",
+    value: 12500,
+    suffix: "+",
+    desc: "Freelancers & Businesses",
+    color: "from-blue-500 to-cyan-500",
+    bgColor: "bg-blue-500/10",
   },
   {
-    icon: <FaTasks className="w-8 h-8" />,
+    icon: FaTasks,
     title: "Tasks Completed",
-    value: 15309,
-    desc: "total tasks finished",
+    value: 45000,
+    suffix: "+",
+    desc: "Successfully finished",
+    color: "from-purple-500 to-pink-500",
+    bgColor: "bg-purple-500/10",
   },
   {
-    icon: <FaCoins className="w-8 h-8" />,
-    title: "Coins Earned",
-    value: 1254678,
-    desc: "rewarded to users",
+    icon: FaCoins,
+    title: "Coins Distributed",
+    value: 2500000,
+    suffix: "+",
+    desc: "Total rewards paid",
+    color: "from-green-500 to-emerald-500",
+    bgColor: "bg-green-500/10",
+  },
+  {
+    icon: FaChartLine,
+    title: "Growth Rate",
+    value: 150,
+    suffix: "%",
+    desc: "Year over year",
+    color: "from-orange-500 to-red-500",
+    bgColor: "bg-orange-500/10",
+  },
+  {
+    icon: FaTrophy,
+    title: "Top Workers",
+    value: 500,
+    suffix: "+",
+    desc: "Elite performers",
+    color: "from-yellow-500 to-amber-500",
+    bgColor: "bg-yellow-500/10",
+  },
+  {
+    icon: FaGlobe,
+    title: "Countries",
+    value: 85,
+    suffix: "+",
+    desc: "Global presence",
+    color: "from-indigo-500 to-purple-500",
+    bgColor: "bg-indigo-500/10",
   },
 ];
 
-const PlatformStatistics = () => (
-  <section
-    aria-labelledby="platform-stats-heading"
-    className="py-16 px-4 md:px-8 bg-white"
-  >
-    <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-12">
-        <h2
-          id="platform-stats-heading"
-          className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4"
+const PlatformStatistics = () => {
+  return (
+    <section className="py-20 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-20 left-20 w-64 h-64 bg-primary rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-[95%] xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
         >
-          Platform Statistics
-        </h2>
-        <p className="text-neutral text-lg">Our growing community achievements</p>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+              Platform Statistics
+            </span>
+          </h2>
+          <p className="text-xl text-base-content/70 max-w-2xl mx-auto">
+            Numbers that showcase our growing community and platform success
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {statsData.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className={`bg-base-100 rounded-2xl p-8 border-2 border-base-300 hover:border-primary transition-all duration-300 shadow-lg hover:shadow-2xl ${stat.bgColor}`}
+              >
+                {/* Icon */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
+                    <Icon className="text-white text-2xl" />
+                  </div>
+                  <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${stat.color} opacity-20`}></div>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-semibold text-base-content mb-3">
+                  {stat.title}
+                </h3>
+
+                {/* Value */}
+                <div className="mb-2">
+                  <span className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                    <CountUp
+                      start={0}
+                      end={stat.value}
+                      duration={2.5}
+                      separator=","
+                      decimals={0}
+                    />
+                  </span>
+                  <span className="text-2xl font-bold text-primary ml-1">{stat.suffix}</span>
+                </div>
+
+                {/* Description */}
+                <p className="text-sm text-base-content/60">
+                  {stat.desc}
+                </p>
+
+                {/* Progress Bar */}
+                <div className="mt-4 h-1 bg-base-200 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "100%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 2, delay: index * 0.2 }}
+                    className={`h-full bg-gradient-to-r ${stat.color} rounded-full`}
+                  />
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Additional Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="mt-16 text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-base-100 border-2 border-primary/20 rounded-full">
+            <FaChartLine className="text-primary" />
+            <span className="text-base-content font-semibold">
+              Growing every day • Join thousands of satisfied users
+            </span>
+          </div>
+        </motion.div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {statsData.map((stat, index) => (
-          <motion.div
-            key={index}
-            className="bg-white shadow-lg rounded-2xl p-8 border border-gray-200 hover:border-primary hover:shadow-2xl transition-all duration-300"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + index * 0.2, type: "spring", stiffness: 120 }}
-            whileHover={{ scale: 1.05 }}
-          >
-            {/* Icon */}
-            <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/20 text-primary text-2xl">
-                {stat.icon}
-              </div>
-            </div>
-
-            {/* Title */}
-            <div className="text-center text-lg font-semibold mb-2 text-gray-900">
-              {stat.title}
-            </div>
-
-            {/* Value */}
-            <div className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-1">
-              <CountUp start={0} end={stat.value} duration={2.5} separator="," />
-            </div>
-
-            {/* Description */}
-            <div className="text-center text-gray-600">
-              {stat.desc}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default PlatformStatistics;

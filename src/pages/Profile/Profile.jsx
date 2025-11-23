@@ -33,13 +33,13 @@ const Profile = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-base-100 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white rounded-2xl shadow-xl overflow-hidden"
+          className="bg-base-100 border border-base-300 rounded-2xl shadow-xl overflow-hidden"
         >
           {/* Profile Header */}
           <div className="bg-gradient-to-r from-primary via-secondary to-accent p-8 text-white">
@@ -84,40 +84,40 @@ const Profile = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Personal Information */}
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                <h2 className="text-2xl font-bold text-base-content flex items-center">
                   <FaUser className="mr-2 text-primary" />
                   Personal Information
                 </h2>
                 
                 <div className="space-y-4">
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-base-200 rounded-lg">
                     <FaEnvelope className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Email Address</p>
-                      <p className="font-semibold">{user?.email || profile?.email || "Not provided"}</p>
+                      <p className="text-sm text-base-content/70">Email Address</p>
+                      <p className="font-semibold text-base-content">{user?.email || profile?.email || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-base-200 rounded-lg">
                     <FaPhone className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Phone Number</p>
-                      <p className="font-semibold">{profile?.phone || "Not provided"}</p>
+                      <p className="text-sm text-base-content/70">Phone Number</p>
+                      <p className="font-semibold text-base-content">{profile?.phone || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-base-200 rounded-lg">
                     <FaMapMarkerAlt className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Address</p>
-                      <p className="font-semibold">{profile?.address || "Not provided"}</p>
+                      <p className="text-sm text-base-content/70">Address</p>
+                      <p className="font-semibold text-base-content">{profile?.address || "Not provided"}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center p-4 bg-base-200 rounded-lg">
                     <FaCalendarAlt className="text-primary mr-3" />
                     <div>
-                      <p className="text-sm text-gray-500">Member Since</p>
+                      <p className="text-sm text-base-content/70">Member Since</p>
                       <p className="font-semibold">
                         {profile?.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "N/A"}
                       </p>
@@ -128,7 +128,7 @@ const Profile = () => {
 
               {/* Account Statistics */}
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+                <h2 className="text-2xl font-bold text-base-content flex items-center">
                   <FaCoins className="mr-2 text-primary" />
                   Account Statistics
                 </h2>
@@ -158,7 +158,7 @@ const Profile = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-8 pt-8 border-t border-gray-200">
+            <div className="mt-8 pt-8 border-t border-base-300">
               <div className="flex flex-col sm:flex-row gap-4">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -172,7 +172,7 @@ const Profile = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex-1 bg-white border-2 border-primary text-primary py-3 px-6 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center"
+                  className="flex-1 bg-base-100 border-2 border-primary text-primary py-3 px-6 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300 flex items-center justify-center"
                 >
                   Change Password
                 </motion.button>

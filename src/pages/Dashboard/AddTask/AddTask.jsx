@@ -96,8 +96,8 @@ const AddTask = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Add New Task</h2>
+    <div className="max-w-3xl mx-auto bg-base-100 border border-base-300 p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-4 text-base-content">Add New Task</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

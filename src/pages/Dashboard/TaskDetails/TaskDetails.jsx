@@ -59,12 +59,12 @@ const TaskDetails = () => {
 
   return (
     <motion.div
-      className="max-w-4xl mx-auto p-6 bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl shadow-2xl mt-10"
+      className="max-w-4xl mx-auto p-6 bg-base-100 border border-base-300 rounded-2xl shadow-2xl mt-10"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <h2 className="text-4xl font-extrabold text-gradient bg-clip-text text-transparent mb-4">
+      <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
         {task.task_title}
       </h2>
 
@@ -73,36 +73,36 @@ const TaskDetails = () => {
           <motion.img
             src={task.task_image_url}
             alt={task.task_title}
-            className="rounded-xl w-full max-h-80 object-cover border-4 border-purple-300 shadow-lg"
+            className="rounded-xl w-full max-h-80 object-cover border-4 border-primary/30 shadow-lg"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           />
         ) : (
-          <div className="w-full max-h-80 bg-gray-300 rounded-xl flex items-center justify-center border-4 border-purple-300 shadow-lg">
-            <span className="text-gray-600">No Image Available</span>
+          <div className="w-full max-h-80 bg-base-200 rounded-xl flex items-center justify-center border-4 border-primary/30 shadow-lg">
+            <span className="text-base-content/70">No Image Available</span>
           </div>
         )}
       </div>
 
       <div className="space-y-2 mb-6">
-        <p className="text-gray-700">
-          <span className="font-semibold text-purple-600">Details:</span>{" "}
+        <p className="text-base-content">
+          <span className="font-semibold text-primary">Details:</span>{" "}
           {task.task_detail}
         </p>
-        <p className="text-gray-700">
-          <span className="font-semibold text-green-600">Buyer:</span>{" "}
+        <p className="text-base-content">
+          <span className="font-semibold text-success">Buyer:</span>{" "}
           {task.buyerId}
         </p>
-        <p className="text-gray-700">
-          <span className="font-semibold text-red-600">Deadline:</span>{" "}
+        <p className="text-base-content">
+          <span className="font-semibold text-error">Deadline:</span>{" "}
           {new Date(task.completion_date).toLocaleDateString()}
         </p>
-        <p className="text-gray-700">
-          <span className="font-semibold text-yellow-600">Payable Amount:</span>{" "}
+        <p className="text-base-content">
+          <span className="font-semibold text-warning">Payable Amount:</span>{" "}
           ${task.payable_amount}
         </p>
-        <p className="text-gray-700">
-          <span className="font-semibold text-blue-600">Workers Needed:</span>{" "}
+        <p className="text-base-content">
+          <span className="font-semibold text-info">Workers Needed:</span>{" "}
           {task.required_workers}
         </p>
       </div>
@@ -110,7 +110,7 @@ const TaskDetails = () => {
       {/* Submission Form */}
       <motion.form
         onSubmit={handleSubmit}
-        className="space-y-4 bg-white p-5 rounded-xl shadow-lg"
+        className="space-y-4 bg-base-100 border border-base-300 p-5 rounded-xl shadow-lg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -118,13 +118,13 @@ const TaskDetails = () => {
         <textarea
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          className="textarea textarea-bordered w-full h-32 p-3 border-2 border-purple-300 rounded-lg focus:border-purple-500 focus:ring focus:ring-purple-200"
+          className="textarea textarea-bordered w-full h-32 p-3 border-2 border-primary/30 rounded-lg focus:border-primary focus:ring focus:ring-primary/20"
           placeholder="Enter your submission details..."
           required
         />
         <motion.button
           type="submit"
-          className="btn bg-gradient-to-r from-purple-500 to-blue-500 text-white w-full hover:from-blue-500 hover:to-purple-500 shadow-lg"
+          className="btn bg-gradient-to-r from-primary to-secondary text-white w-full shadow-lg hover:opacity-90"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

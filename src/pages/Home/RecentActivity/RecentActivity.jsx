@@ -60,7 +60,7 @@ const RecentActivity = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02 }}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+              className="bg-base-100 border border-base-300 rounded-xl shadow-lg p-6 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
             >
               <div className="flex items-center space-x-4">
                 <div className="relative">
@@ -73,9 +73,9 @@ const RecentActivity = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center space-x-2">
-                    <span className="font-semibold text-gray-900">{activity.user}</span>
+                    <span className="font-semibold text-base-content">{activity.user}</span>
                     <span className="text-neutral">{activity.action}</span>
-                    <span className="font-medium text-gray-700">{activity.task}</span>
+                    <span className="font-medium text-base-content/70">{activity.task}</span>
                   </div>
                   <div className="flex items-center space-x-4 mt-2">
                     <div className="flex items-center text-secondary">

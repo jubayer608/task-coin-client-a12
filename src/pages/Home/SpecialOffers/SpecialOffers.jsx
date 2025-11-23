@@ -39,7 +39,7 @@ const SpecialOffers = () => {
   ];
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-white">
+    <section className="py-16 px-4 md:px-8 bg-base-100">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">Special Offers</h2>
@@ -54,7 +54,7 @@ const SpecialOffers = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.05, rotateY: 5 }}
-              className="relative bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300 overflow-hidden"
+              className="relative bg-base-100 border border-base-300 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 overflow-hidden"
             >
               <div className={`absolute top-0 right-0 bg-gradient-to-r ${offer.color} text-white px-3 py-1 text-xs font-bold rounded-bl-lg`}>
                 {offer.badge}
@@ -65,8 +65,8 @@ const SpecialOffers = () => {
                   {offer.icon}
                 </div>
                 
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{offer.title}</h3>
-                <p className="text-gray-600 mb-4">{offer.description}</p>
+                <h3 className="text-xl font-bold text-base-content mb-3">{offer.title}</h3>
+                <p className="text-base-content/70 mb-4">{offer.description}</p>
                 
                 <motion.button
                   whileHover={{ scale: 1.05 }}

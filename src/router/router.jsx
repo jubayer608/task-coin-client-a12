@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import RootLayouts from "../layouts/RootLayouts";
 import Home from "../pages/Home/Home/Home";
 import AllTasks from "../pages/Tasks/AllTasks";
+import Blog from "../pages/Blog/Blog";
 import AuthLayouts from "../layouts/AuthLayouts";
 import Login from "../Authentication/Login/Login";
 import Register from "../Authentication/Register/Register";
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/tasks",
         Component: AllTasks,
+      },
+      {
+        path: "/blog",
+        Component: Blog,
       },
       {
         path: "/profile",

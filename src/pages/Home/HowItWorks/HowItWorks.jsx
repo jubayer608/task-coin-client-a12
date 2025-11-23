@@ -57,14 +57,14 @@ const HowItWorks = () => {
                 </div>
                 
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-gray-300 transform translate-x-4">
+                  <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-base-300 transform translate-x-4">
                     <div className={`h-full bg-gradient-to-r ${step.color} w-0 animate-pulse`}></div>
                   </div>
                 )}
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              <h3 className="text-xl font-bold text-base-content mb-3">{step.title}</h3>
+              <p className="text-base-content/70">{step.description}</p>
             </motion.div>
           ))}
         </div>

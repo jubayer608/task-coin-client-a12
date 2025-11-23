@@ -3,8 +3,9 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
 import useUserRole from "../../../hooks/useUserRole";
-import { FaTasks, FaClock, FaDollarSign, FaChartLine, FaTrophy, FaStar } from "react-icons/fa";
+import { FaTasks, FaClock, FaDollarSign, FaChartLine, FaTrophy, FaStar, FaArrowRight, FaCheckCircle, FaRocket } from "react-icons/fa";
 import { Link } from "react-router";
+import CountUp from "react-countup";
 
 const WorkerDashboard = () => {
   const { user, loading: userLoading } = useUserRole();
@@ -12,7 +13,6 @@ const WorkerDashboard = () => {
 
   if (userLoading || !user) return <Loading />;
 
-  // Worker stats (total submissions, pending, earnings from approved)
   const { data: stats = {} } = useQuery({
     queryKey: ["workerStats", user.email],
     queryFn: async () => {
@@ -21,241 +21,257 @@ const WorkerDashboard = () => {
     },
   });
 
-  // Approved submissions list (buyer approved)
   const { data: approvedSubmissions = [] } = useQuery({
     queryKey: ["workerApprovedSubmissions", user.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/worker/submissions/approved/${user.email}`
-      );
-      // Ensure data is array and has correct fields
+      const res = await axiosSecure.get(`/worker/submissions/approved/${user.email}`);
       return Array.isArray(res.data) ? res.data : [];
     },
   });
 
+  const successRate = stats.totalSubmissions > 0 
+    ? Math.round(((stats.totalSubmissions - (stats.pendingSubmissions || 0)) / stats.totalSubmissions) * 100)
+    : 0;
+
+  const statCards = [
+    {
+      label: "Total Submissions",
+      value: stats.totalSubmissions || 0,
+      icon: FaTasks,
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "bg-blue-500/10",
+    },
+    {
+      label: "Pending Reviews",
+      value: stats.pendingSubmissions || 0,
+      icon: FaClock,
+      color: "from-yellow-500 to-orange-500",
+      bgColor: "bg-yellow-500/10",
+    },
+    {
+      label: "Total Earnings",
+      value: stats.totalEarning || 0,
+      icon: FaDollarSign,
+      color: "from-green-500 to-emerald-500",
+      bgColor: "bg-green-500/10",
+      prefix: "$",
+    },
+    {
+      label: "Success Rate",
+      value: successRate,
+      icon: FaChartLine,
+      color: "from-purple-500 to-pink-500",
+      bgColor: "bg-purple-500/10",
+      suffix: "%",
+    },
+  ];
+
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[95%] xl:max-w-[1400px] mx-auto py-10 px-4 sm:px-6 lg:px-8">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">
-          Welcome back, {user.displayName || "Worker"}! 👋
-        </h2>
-        <p className="text-gray-600">Here's your performance overview</p>
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-10"
+      >
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <span className="text-3xl">👋</span>
+          </div>
+          <div>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-base-content">
+              Welcome back, {user.displayName || "Worker"}!
+            </h2>
+            <p className="text-lg text-base-content/70 mt-1">Here's your performance overview</p>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <motion.div
-          className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl text-white shadow-lg"
-          whileHover={{ scale: 1.05 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-blue-100 text-sm font-medium">Total Submissions</p>
-              <p className="text-3xl font-bold">{stats.totalSubmissions || 0}</p>
-            </div>
-            <FaTasks className="text-4xl text-blue-200" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-6 rounded-xl text-white shadow-lg"
-          whileHover={{ scale: 1.05 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-yellow-100 text-sm font-medium">Pending Reviews</p>
-              <p className="text-3xl font-bold">{stats.pendingSubmissions || 0}</p>
-            </div>
-            <FaClock className="text-4xl text-yellow-200" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="bg-gradient-to-r from-green-500 to-green-600 p-6 rounded-xl text-white shadow-lg"
-          whileHover={{ scale: 1.05 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-green-100 text-sm font-medium">Total Earnings</p>
-              <p className="text-3xl font-bold">${stats.totalEarning || 0}</p>
-            </div>
-            <FaDollarSign className="text-4xl text-green-200" />
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="bg-gradient-to-r from-purple-500 to-purple-600 p-6 rounded-xl text-white shadow-lg"
-          whileHover={{ scale: 1.05 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-purple-100 text-sm font-medium">Success Rate</p>
-              <p className="text-3xl font-bold">
-                {stats.totalSubmissions > 0 
-                  ? Math.round(((stats.totalSubmissions - stats.pendingSubmissions) / stats.totalSubmissions) * 100)
-                  : 0}%
-              </p>
-            </div>
-            <FaChartLine className="text-4xl text-purple-200" />
-          </div>
-        </motion.div>
+        {statCards.map((card, idx) => {
+          const Icon = card.icon;
+          return (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className={`relative overflow-hidden rounded-2xl shadow-xl border-2 border-base-300 hover:border-primary transition-all duration-300 ${card.bgColor}`}
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br opacity-10 rounded-full -mr-16 -mt-16"></div>
+              <div className="p-6 relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center shadow-lg`}>
+                    <Icon className="text-white text-2xl" />
+                  </div>
+                </div>
+                <p className="text-base-content/70 text-sm font-medium mb-2">{card.label}</p>
+                <p className="text-3xl md:text-4xl font-extrabold text-base-content">
+                  {card.prefix && <span>{card.prefix}</span>}
+                  <CountUp
+                    start={0}
+                    end={card.value}
+                    duration={2}
+                    separator=","
+                  />
+                  {card.suffix && <span>{card.suffix}</span>}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
-      {/* Success Rate Radial */}
-      {(() => {
-        const successRate = stats.totalSubmissions > 0 
-          ? Math.round(((stats.totalSubmissions - stats.pendingSubmissions) / stats.totalSubmissions) * 100)
-          : 0;
-        return (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8 flex items-center justify-center">
+      {/* Success Rate & Quick Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+        {/* Success Rate */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border-2 border-primary/20 rounded-2xl p-8 text-center"
+        >
+          <div className="radial-progress text-primary" style={{ "--value": successRate, "--size": "10rem", "--thickness": "12px" }} role="progressbar">
             <div className="text-center">
-              <div className="radial-progress text-primary" style={{ "--value": successRate, "--size": "8rem", "--thickness": "10px" }} role="progressbar">
-                <span className="text-2xl font-bold text-gray-800">{successRate}%</span>
-              </div>
-              <p className="mt-3 text-sm text-gray-600">Task success rate</p>
+              <span className="text-4xl font-extrabold text-base-content block">{successRate}%</span>
+              <span className="text-sm text-base-content/60">Success Rate</span>
             </div>
           </div>
-        );
-      })()}
+          <p className="mt-4 text-base-content/70">Task completion success rate</p>
+        </motion.div>
 
-      {/* Performance Chart Placeholder */}
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-xl font-bold text-gray-900 flex items-center">
-            <FaChartLine className="mr-2 text-primary" />
-            Performance Overview
+        {/* Quick Actions */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6 }}
+          className="lg:col-span-2 bg-base-100 border-2 border-base-300 rounded-2xl shadow-xl p-6"
+        >
+          <h3 className="text-2xl font-bold text-base-content mb-6 flex items-center gap-2">
+            <FaRocket className="text-primary" />
+            Quick Actions
           </h3>
-          <div className="flex items-center space-x-2">
-            <FaTrophy className="text-yellow-500" />
-            <span className="text-sm text-gray-600">Top Performer</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/dashboard/tasklist"
+                className="block p-4 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-semibold hover:shadow-xl transition-all duration-300 text-center"
+              >
+                <FaTasks className="text-2xl mx-auto mb-2" />
+                Browse Tasks
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/dashboard/submissions"
+                className="block p-4 bg-base-200 border-2 border-primary text-primary rounded-xl font-semibold hover:bg-primary hover:text-white transition-all duration-300 text-center"
+              >
+                <FaCheckCircle className="text-2xl mx-auto mb-2" />
+                My Submissions
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/dashboard/withdrawals"
+                className="block p-4 bg-base-200 border-2 border-secondary text-secondary rounded-xl font-semibold hover:bg-secondary hover:text-white transition-all duration-300 text-center"
+              >
+                <FaDollarSign className="text-2xl mx-auto mb-2" />
+                Withdraw
+              </Link>
+            </motion.div>
           </div>
-        </div>
-        
-        <div className="h-64 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg flex items-center justify-center">
-          <div className="text-center">
-            <FaChartLine className="text-6xl text-gray-300 mb-4" />
-            <p className="text-gray-500 text-lg">Performance Chart</p>
-            <p className="text-gray-400 text-sm">Visual representation of your work progress</p>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Recent Achievements */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-            <FaStar className="mr-2 text-yellow-500" />
-            Recent Achievements
+      {/* Approved Submissions */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+        className="bg-base-100 border-2 border-base-300 rounded-2xl shadow-xl overflow-hidden"
+      >
+        <div className="p-6 border-b-2 border-base-300 bg-gradient-to-r from-primary/10 to-secondary/10">
+          <h3 className="text-2xl font-bold text-base-content flex items-center gap-2">
+            <FaTrophy className="text-accent" />
+            Approved Submissions
           </h3>
-          <div className="space-y-3">
-            <div className="flex items-center p-3 bg-yellow-50 rounded-lg">
-              <FaTrophy className="text-yellow-500 mr-3" />
-              <div>
-                <p className="font-semibold text-gray-900">First Submission</p>
-                <p className="text-sm text-gray-600">Completed your first task</p>
-              </div>
-            </div>
-            <div className="flex items-center p-3 bg-green-50 rounded-lg">
-              <FaStar className="text-green-500 mr-3" />
-              <div>
-                <p className="font-semibold text-gray-900">Quality Worker</p>
-                <p className="text-sm text-gray-600">Maintained high quality standards</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
-          <div className="space-y-3">
-            <Link to="/dashboard/tasklist" className="block w-full text-center bg-gradient-to-r from-primary to-secondary text-white py-3 px-4 rounded-lg font-semibold hover:shadow-lg transition-all duration-300">
-              Browse Available Tasks
-            </Link>
-            <Link to="/dashboard/submissions" className="block w-full text-center bg-white border-2 border-primary text-primary py-3 px-4 rounded-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300">
-              View My Submissions
-            </Link>
-            <Link to="/dashboard/withdrawals" className="block w-full text-center bg-white border-2 border-secondary text-secondary py-3 px-4 rounded-lg font-semibold hover:bg-secondary hover:text-white transition-all duration-300">
-              Withdraw Earnings
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Approved Submissions Table */}
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
-          <h3 className="text-xl font-bold text-gray-900">My Approved Submissions</h3>
-          <p className="text-gray-600 text-sm">Tasks that have been approved by buyers</p>
+          <p className="text-sm text-base-content/70 mt-1">Tasks that have been approved by buyers</p>
         </div>
 
         {approvedSubmissions.length === 0 ? (
           <div className="p-12 text-center">
-            <FaTasks className="text-6xl text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-xl mb-2">No approved submissions yet</p>
-            <p className="text-gray-400">Complete tasks to see your approved work here</p>
+            <FaTasks className="text-6xl text-base-content/20 mx-auto mb-4" />
+            <p className="text-base-content/70 text-xl mb-2">No approved submissions yet</p>
+            <p className="text-base-content/50">Complete tasks to see your approved work here</p>
+            <Link
+              to="/dashboard/tasklist"
+              className="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Browse Tasks <FaArrowRight />
+            </Link>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50">
+              <thead className="bg-base-200">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task Title</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payable Amount</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Buyer Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-base-content">Task Title</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-base-content">Amount</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-base-content">Buyer</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-base-content">Status</th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-base-content">Date</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {approvedSubmissions.map((s, index) => (
+              <tbody className="divide-y divide-base-300">
+                {approvedSubmissions.slice(0, 5).map((s, index) => (
                   <motion.tr
                     key={s._id}
-                    className="hover:bg-gray-50 transition-colors"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: 0.8 + index * 0.05 }}
+                    className="hover:bg-base-200 transition-colors"
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td className="px-6 py-4 text-sm font-medium text-base-content">
                       {s.task_title || "N/A"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-semibold">
-                        ${Number(s.payable_amount || 0)}
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-sm font-bold">
+                        <FaDollarSign className="text-xs" />
+                        {Number(s.payable_amount || 0)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 text-sm text-base-content/70">
                       {s.Buyer_email || "Unknown"}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                        {s.status === "approve" ? "Approved" : s.status}
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-success/20 text-success rounded-full text-xs font-semibold">
+                        <FaCheckCircle className="text-xs" />
+                        Approved
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {s.createdAt
-                        ? new Date(s.createdAt).toLocaleDateString("en-GB")
-                        : "N/A"}
+                    <td className="px-6 py-4 text-sm text-base-content/70">
+                      {s.createdAt ? new Date(s.createdAt).toLocaleDateString("en-GB") : "N/A"}
                     </td>
                   </motion.tr>
                 ))}
               </tbody>
             </table>
+            {approvedSubmissions.length > 5 && (
+              <div className="p-4 text-center border-t border-base-300">
+                <Link
+                  to="/dashboard/submissions"
+                  className="inline-flex items-center gap-2 text-primary hover:text-secondary font-semibold transition-colors"
+                >
+                  View All Submissions <FaArrowRight />
+                </Link>
+              </div>
+            )}
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

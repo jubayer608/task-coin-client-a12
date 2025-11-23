@@ -24,7 +24,7 @@ const EarningTips = () => (
         {tips.map((tip, index) => (
           <motion.div
             key={index}
-            className="bg-white shadow-lg rounded-2xl p-6 border border-gray-200 hover:border-primary hover:shadow-2xl transition-all duration-300"
+            className="bg-base-100 border border-base-300 shadow-lg rounded-2xl p-6 hover:border-primary hover:shadow-2xl transition-all duration-300"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 + index * 0.15, type: "spring", stiffness: 120 }}
@@ -35,8 +35,8 @@ const EarningTips = () => (
                 {tip.icon}
               </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-gray-900">{tip.title}</h3>
-            <p className="text-gray-700 text-center">{tip.desc}</p>
+            <h3 className="text-xl font-bold mb-3 text-center text-base-content">{tip.title}</h3>
+            <p className="text-base-content/70 text-center">{tip.desc}</p>
           </motion.div>
         ))}
       </div>

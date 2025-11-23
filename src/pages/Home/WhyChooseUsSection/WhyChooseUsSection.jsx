@@ -1,101 +1,154 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaShieldAlt, FaDollarSign, FaUsers, FaHeadset } from "react-icons/fa";
+import { FaShieldAlt, FaDollarSign, FaUsers, FaHeadset, FaCheckCircle, FaArrowRight } from "react-icons/fa";
 
 const whyChooseData = [
   {
     id: 1,
     title: "Trusted Platform",
     content:
-      "Our platform is trusted by thousands of users worldwide for secure micro-tasks and reliable payments.",
-    icon: <FaShieldAlt />,
+      "Our platform is trusted by thousands of users worldwide for secure micro-tasks and reliable payments. We use industry-leading security measures to protect your data and transactions.",
+    icon: FaShieldAlt,
+    features: ["SSL Encryption", "Secure Payments", "Data Protection", "Verified Users"],
+    gradient: "from-blue-500 to-cyan-500",
   },
   {
     id: 2,
     title: "Fast Payment",
     content:
-      "Workers receive coins instantly after task approval. Buyers can purchase coins easily.",
-    icon:
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-      >
-        <FaDollarSign />
-      </motion.div>,
+      "Workers receive coins instantly after task approval. Buyers can purchase coins easily with multiple payment options. No waiting, no delays - get paid when you deserve it.",
+    icon: FaDollarSign,
+    features: ["Instant Payments", "Multiple Methods", "24/7 Processing", "Low Fees"],
+    gradient: "from-green-500 to-emerald-500",
   },
   {
     id: 3,
     title: "User Friendly",
     content:
-      "Our interface is clean, intuitive, and responsive for all devices.",
-    icon: <FaUsers />,
+      "Our interface is clean, intuitive, and responsive for all devices. Whether you're on desktop, tablet, or mobile, TaskCoin works seamlessly everywhere you go.",
+    icon: FaUsers,
+    features: ["Easy Navigation", "Mobile Responsive", "Intuitive Design", "Quick Setup"],
+    gradient: "from-purple-500 to-pink-500",
   },
   {
     id: 4,
     title: "24/7 Support",
     content:
-      "We provide round-the-clock support to ensure all users have a smooth experience.",
-    icon: <FaHeadset />,
+      "We provide round-the-clock support to ensure all users have a smooth experience. Our dedicated team is always ready to help you with any questions or issues.",
+    icon: FaHeadset,
+    features: ["Live Chat", "Email Support", "Help Center", "Community Forum"],
+    gradient: "from-orange-500 to-red-500",
   },
 ];
 
 const WhyChooseUsSection = () => {
-  const [openId, setOpenId] = useState(null);
+  const [openId, setOpenId] = useState(1);
 
   const toggle = (id) => setOpenId(openId === id ? null : id);
 
   return (
-    <section className="py-16 px-4 md:px-8 bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
-            Why Choose Us
+    <section className="py-20 bg-gradient-to-br from-base-100 via-base-200 to-base-100">
+      <div className="max-w-[95%] xl:max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+            <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+              Why Choose TaskCoin?
+            </span>
           </h2>
-          <p className="text-neutral text-lg">Discover what makes TaskCoin the best choice for you</p>
-        </div>
+          <p className="text-xl text-base-content/70 max-w-2xl mx-auto">
+            Discover what makes us the preferred choice for freelancers and businesses worldwide
+          </p>
+        </motion.div>
 
-        <div className="grid gap-6 max-w-4xl mx-auto">
-          {whyChooseData.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, type: "spring", stiffness: 120 }}
-              className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg border border-gray-200 hover:shadow-2xl hover:border-primary transition-all duration-300 overflow-hidden"
-            >
-              <button
-                onClick={() => toggle(item.id)}
-                className="w-full flex items-center justify-between px-6 py-5 focus:outline-none hover:bg-primary/10 transition-colors"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          {whyChooseData.map((item, index) => {
+            const Icon = item.icon;
+            const isOpen = openId === item.id;
+            
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className={`bg-base-100 border-2 rounded-2xl shadow-xl overflow-hidden transition-all duration-300 ${
+                  isOpen ? "border-primary shadow-2xl" : "border-base-300 hover:border-primary/50"
+                }`}
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-tr from-primary/20 via-secondary/20 to-accent/20 text-primary text-2xl shadow-md">
-                    {item.icon}
+                <button
+                  onClick={() => toggle(item.id)}
+                  className="w-full focus:outline-none"
+                >
+                  <div className="p-6 flex items-center justify-between">
+                    <div className="flex items-center gap-4 flex-1">
+                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${item.gradient} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                        <Icon className="text-white text-2xl" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="text-xl font-bold text-base-content mb-1">
+                          {item.title}
+                        </h3>
+                        <p className="text-sm text-base-content/60 line-clamp-1">
+                          {item.content}
+                        </p>
+                      </div>
+                    </div>
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="ml-4 flex-shrink-0"
+                    >
+                      <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                        isOpen ? "bg-primary text-white" : "bg-base-200 text-base-content"
+                      }`}>
+                        <FaArrowRight className="text-sm" />
+                      </div>
+                    </motion.div>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    {item.title}
-                  </h3>
-                </div>
-                <span className="text-2xl text-primary">
-                  {openId === item.id ? "−" : "+"}
-                </span>
-              </button>
+                </button>
 
-              <AnimatePresence initial={false}>
-                {openId === item.id && (
-                  <motion.div
-                    key="content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="px-6 pb-6 text-gray-700 dark:text-gray-300 text-sm"
-                  >
-                    {item.content}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          ))}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 border-t border-base-300 pt-6">
+                        <p className="text-base-content/80 mb-6 leading-relaxed">
+                          {item.content}
+                        </p>
+                        <div className="grid grid-cols-2 gap-3">
+                          {item.features.map((feature, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: idx * 0.1 }}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              <FaCheckCircle className="text-primary flex-shrink-0" />
+                              <span className="text-base-content/70">{feature}</span>
+                            </motion.div>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

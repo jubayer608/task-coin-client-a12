@@ -50,7 +50,7 @@ const FeaturedTasks = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.05 }}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-2xl transition-all duration-300"
+              className="bg-base-100 border border-base-300 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
             >
               <div className="h-48 bg-cover bg-center" style={{ backgroundImage: `url(${task.image})` }}>
                 <div className="h-full bg-opacity-40 flex items-end">
@@ -61,9 +61,9 @@ const FeaturedTasks = () => {
               </div>
               
               <div className="p-6">
-                <p className="text-gray-600 mb-4">{task.description}</p>
+                <p className="text-base-content/70 mb-4">{task.description}</p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+                <div className="flex items-center justify-between text-sm text-base-content/60 mb-4">
                   <div className="flex items-center">
                     <FaClock className="mr-1" />
                     {task.deadline}

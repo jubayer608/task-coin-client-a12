@@ -4,7 +4,7 @@ import { FaEnvelope, FaPaperPlane } from "react-icons/fa";
 
 const Newsletter = () => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-gradient-to-r from-primary via-secondary to-accent text-white relative overflow-hidden">
+    <section className="py-20 px-4 md:px-8 mb-16 bg-gradient-to-r from-primary via-secondary to-accent text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full"></div>

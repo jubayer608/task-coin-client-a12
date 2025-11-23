@@ -1,10 +1,26 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="https://i.postimg.cc/HsXsqnGN/star.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>  TaskCoin</title>
+    <script>
+      // Initialize theme before page renders to prevent flash - default to light
+      (function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (document.documentElement) {
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        }
+        if (document.body) {
+          document.body.setAttribute('data-theme', savedTheme);
+        }
+        const root = document.getElementById('root');
+        if (root) {
+          root.setAttribute('data-theme', savedTheme);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -50,7 +50,7 @@ const AllTasks = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[95%] xl:max-w-[1400px] mx-auto py-10 px-4 sm:px-6 lg:px-8">
       {/* Header */}
       <div className="text-center mb-10">
         <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary mb-4">
