@@ -25,12 +25,12 @@ createRoot(rootElement).render(
   <StrictMode>
     <ThemeProvider>
       <div className="poppins-font min-h-screen bg-base-100 text-base-content">
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <RouterProvider router={router}></RouterProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      </div>
+     <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+         <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
+     </QueryClientProvider>
+    </div>
     </ThemeProvider>
   </StrictMode>
 );

@@ -164,7 +164,7 @@ const Navbar = () => {
                   Home
                 </Link>
                 <Link
-                  to="/dashboard"
+                  to="/dashboard/home"
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                     scrolled
                       ? "text-base-content hover:bg-base-200 hover:text-primary"

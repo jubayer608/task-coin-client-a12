@@ -26,7 +26,7 @@ const Register = () => {
       return res.data;
     },
     onSuccess: (data) => {
-      navigate("/dashboard");
+      navigate("/dashboard/home");
     },
     onError: (err) => {
       console.error("Error saving user:", err);

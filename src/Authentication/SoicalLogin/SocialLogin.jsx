@@ -7,7 +7,7 @@ const SocialLogin = () => {
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard";
+  const from = location.state?.from?.pathname || "/dashboard/home";
 
   const handleGoogle = async () => {
     try {

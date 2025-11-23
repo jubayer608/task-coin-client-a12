@@ -108,7 +108,7 @@ const DashboardLayout = () => {
             className="hidden sm:flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg border border-white/30"
           >
             <FaCoins className="text-accent" />
-            <span className="font-bold">{coins || 0}</span>
+            <span className="font-bold">{coins}</span>
           </motion.div>
 
           {/* Role Badge */}
