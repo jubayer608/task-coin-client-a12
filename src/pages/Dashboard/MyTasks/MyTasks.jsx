@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { motion, AnimatePresence } from "framer-motion";
 import useUserRole from "../../../hooks/useUserRole";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { FiEdit, FiTrash2, FiClipboard } from "react-icons/fi";
 
 const MyTasks = () => {
   const { user, coins, setCoins, loading } = useUserRole();
@@ -58,10 +60,10 @@ const MyTasks = () => {
   const handleDelete = async (task) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `Deleting this task will refill coins for uncompleted workers`,
+      text: `Deleting this task will refund unspent coins.`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#7C3AED",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then(async (result) => {
@@ -70,9 +72,8 @@ const MyTasks = () => {
           await axiosSecure.delete(`/tasks/${task._id}`);
           Swal.fire("Deleted!", "Task has been deleted.", "success");
 
-          // Refill coins in frontend
-          const refillAmount = task.required_workers * task.payable_amount;
-          setCoins(coins + refillAmount);
+          const refund = task.required_workers * task.payable_amount;
+          setCoins(coins + refund);
 
           fetchTasks();
         } catch (error) {
@@ -92,91 +93,149 @@ const MyTasks = () => {
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-3xl font-bold text-primary mb-6">My Tasks</h2>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 min-h-screen bg-base-200"
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <h2 className="text-3xl font-bold text-primary flex items-center gap-2 poppins-font">
+          <FiClipboard className="text-secondary" />
+          My Tasks
+        </h2>
+        <div className="bg-primary/10 text-primary px-4 py-2 rounded-lg font-semibold shadow-sm">
+          Coins: {coins}
+        </div>
+      </div>
 
-      {/* Table */}
-      <div className="overflow-x-auto shadow-lg rounded-lg">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr className="bg-gradient-to-r from-primary to-secondary text-white">
+      {/* Task Table */}
+      <div className="overflow-x-auto bg-base-100 border border-base-300 rounded-2xl shadow-md">
+        <table className="table table-zebra w-full text-base-content">
+          <thead className="bg-gradient-to-r from-primary to-secondary text-white">
+            <tr>
               <th>Title</th>
               <th>Required Workers</th>
-              <th>Payable Amount</th>
-              <th>Completion Date</th>
+              <th>Pay/Worker</th>
+              <th>Deadline</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task) => (
-              <tr key={task._id}>
-                <td>{task.task_title}</td>
-                <td>{task.required_workers}</td>
-                <td>${task.payable_amount}</td>
-                <td>{new Date(task.completion_date).toLocaleDateString()}</td>
-                <td className="flex gap-2">
-                  <button
-                    className="btn btn-sm btn-info"
-                    onClick={() => handleUpdate(task)}
-                  >
-                    Update
-                  </button>
-                  <button
-                    className="btn btn-sm btn-error"
-                    onClick={() => handleDelete(task)}
-                  >
-                    Delete
-                  </button>
+            {tasks.length === 0 ? (
+              <tr>
+                <td
+                  colSpan="5"
+                  className="text-center py-10 text-base-content/70"
+                >
+                  No tasks added yet.
                 </td>
               </tr>
-            ))}
+            ) : (
+              tasks.map((task, index) => (
+                <motion.tr
+                  key={task._id}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="hover:bg-base-200 transition-colors"
+                >
+                  <td className="font-semibold">{task.task_title}</td>
+                  <td>{task.required_workers}</td>
+                  <td>${task.payable_amount}</td>
+                  <td>{new Date(task.completion_date).toLocaleDateString()}</td>
+                  <td className="flex gap-2">
+                    <button
+                      className="btn btn-sm bg-info/20 text-info border-info/30 hover:bg-info/30 transition-all"
+                      onClick={() => handleUpdate(task)}
+                    >
+                      <FiEdit />
+                      <span className="hidden sm:inline">Update</span>
+                    </button>
+                    <button
+                      className="btn btn-sm bg-error/20 text-error border-error/30 hover:bg-error/30 transition-all"
+                      onClick={() => handleDelete(task)}
+                    >
+                      <FiTrash2 />
+                      <span className="hidden sm:inline">Delete</span>
+                    </button>
+                  </td>
+                </motion.tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Update Modal */}
-      {editingTask && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-base-100 border border-base-300 p-6 rounded-lg w-full max-w-lg">
-            <h3 className="text-xl font-bold mb-4 text-base-content">Update Task</h3>
-            <input
-              type="text"
-              name="task_title"
-              placeholder="Task Title"
-              className="input input-bordered w-full mb-2"
-              value={formData.task_title}
-              onChange={handleChange}
-            />
-            <textarea
-              name="task_detail"
-              placeholder="Task Detail"
-              className="textarea textarea-bordered w-full mb-2"
-              value={formData.task_detail}
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="submission_info"
-              placeholder="Submission Info"
-              className="input input-bordered w-full mb-4"
-              value={formData.submission_info}
-              onChange={handleChange}
-            />
-            <div className="flex justify-end gap-2">
-              <button
-                className="btn btn-sm btn-error"
-                onClick={() => setEditingTask(null)}
-              >
-                Cancel
-              </button>
-              <button className="btn btn-sm btn-success" onClick={submitUpdate}>
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      <AnimatePresence>
+        {editingTask && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="bg-base-100 border border-base-300 p-8 rounded-2xl w-full max-w-lg shadow-2xl relative overflow-hidden"
+            >
+              {/* Modal gradient accent */}
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-40 rounded-2xl pointer-events-none"></div>
+
+              <h3 className="text-2xl font-bold text-primary mb-6 relative z-10">
+                ✏️ Update Task
+              </h3>
+
+              <div className="space-y-4 relative z-10">
+                <input
+                  type="text"
+                  name="task_title"
+                  placeholder="Task Title"
+                  className="input input-bordered w-full focus:outline-primary"
+                  value={formData.task_title}
+                  onChange={handleChange}
+                />
+                <textarea
+                  name="task_detail"
+                  placeholder="Task Detail"
+                  className="textarea textarea-bordered w-full focus:outline-primary min-h-[100px]"
+                  value={formData.task_detail}
+                  onChange={handleChange}
+                />
+                <input
+                  type="text"
+                  name="submission_info"
+                  placeholder="Submission Info"
+                  className="input input-bordered w-full focus:outline-primary"
+                  value={formData.submission_info}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="flex justify-end gap-3 mt-6 relative z-10">
+                <button
+                  onClick={() => setEditingTask(null)}
+                  className="btn btn-outline btn-error"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={submitUpdate}
+                  className="btn btn-primary shadow-md hover:shadow-lg"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 

@@ -387,7 +387,7 @@ const Navbar = () => {
                       Home
                     </Link>
                     <Link
-                      to="/dashboard"
+                      to="/dashboard/home"
                       onClick={() => setIsOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-base-content hover:bg-base-200 hover:text-primary rounded-lg font-medium transition-colors"
                     >

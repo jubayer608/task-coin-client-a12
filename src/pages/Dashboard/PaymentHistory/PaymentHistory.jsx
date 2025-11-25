@@ -1,4 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import { FiCreditCard } from "react-icons/fi";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
@@ -24,16 +26,37 @@ const PaymentHistory = () => {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4 text-center text-secondary">
-        Payment History
-      </h1>
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="p-6 min-h-screen bg-base-200"
+    >
+      {/* Header */}
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold text-primary flex items-center justify-center gap-2 poppins-font">
+          <FiCreditCard className="text-secondary text-3xl" />
+          Payment History
+        </h1>
+        <p className="text-base-content/70 inter-font mt-1">
+          Review all your past coin purchases and transaction details
+        </p>
+      </div>
+
       {payments.length === 0 ? (
-        <p className="text-center text-gray-500">No payment history found.</p>
+        <div className="bg-base-100 border border-base-300 rounded-2xl shadow-md p-10 text-center">
+          <p className="text-base-content/70 text-lg">
+            You haven’t made any payments yet 💳
+          </p>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table table-zebra w-full">
-            <thead className="bg-primary text-white">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="overflow-x-auto bg-base-100 border border-base-300 rounded-2xl shadow-md"
+        >
+          <table className="table table-zebra w-full inter-font">
+            <thead className="bg-gradient-to-r from-primary to-secondary text-white">
               <tr>
                 <th>#</th>
                 <th>Transaction ID</th>
@@ -44,19 +67,29 @@ const PaymentHistory = () => {
             </thead>
             <tbody>
               {payments.map((p, index) => (
-                <tr key={p._id}>
-                  <td>{index + 1}</td>
-                  <td>{p.transactionId || "N/A"}</td>
-                  <td>{p.coins}</td>
-                  <td>${p.amount}</td>
-                  <td>{new Date(p.createdAt).toLocaleString()}</td>
-                </tr>
+                <motion.tr
+                  key={p._id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="hover:bg-base-200 transition-all"
+                >
+                  <td className="font-semibold">{index + 1}</td>
+                  <td className="text-sm text-primary font-medium">
+                    {p.transactionId || "N/A"}
+                  </td>
+                  <td className="font-semibold text-secondary">{p.coins}</td>
+                  <td className="font-semibold text-success">${p.amount}</td>
+                  <td className="text-sm text-base-content/70">
+                    {new Date(p.createdAt).toLocaleString()}
+                  </td>
+                </motion.tr>
               ))}
             </tbody>
           </table>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
